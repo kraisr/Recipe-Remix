@@ -1,5 +1,7 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
+//pages
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -9,7 +11,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              
+              element={<Home />}
             />
           </Routes>
         </div>
