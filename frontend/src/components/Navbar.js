@@ -12,6 +12,7 @@ const Navbar = () => {
         <nav>
             <div className="container">
                 <div className="navhome">
+                
                     <Link to="/">
                         <img href=".../images/logo.png" alt="logo" />
                     </Link>
@@ -47,7 +48,7 @@ const Navbar = () => {
                             <span>{'>'}</span>
                         </Link>
 
-                        <Link to="/" class="sub-menu-link" onClick={toggleMenu}>
+                        <Link to="/../settings" class="sub-menu-link" onClick={toggleMenu}>
                             <i class="fa-solid fa-gear"></i>
                             <p>Settings</p>
                             <span>{'>'}</span>
