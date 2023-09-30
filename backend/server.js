@@ -21,10 +21,13 @@ app.get('/', (req, res) => {
 // start express server
 const startServer = async () => {
   try {
-    // connect to MongoDB
-    // [TODO] Get the url from mongodb atlas website
-    // connectDB(process.env.MONGO_URI);
+    // connect to MongoDB using .env variable
+    connectDB(process.env.MONGO_URL);
+
+    app.listen(8080, () => console.log('Server is running on port http://localhost:8080'));
   } catch (error) {
     console.log(error);
   }
 }
+
+startServer();
