@@ -16,7 +16,7 @@ app.use(express.json({ limit: '50mb' }));
 // define a callback function with request and response parameters
 app.get('/', (req, res) => {
   res.send({ message: 'Hello World!' });
-})
+});
 
 // start express server
 const startServer = async () => {
