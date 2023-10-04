@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 //pages
 import Home from './pages/Home';
@@ -10,13 +10,23 @@ import Settings from "./pages/Settings";
 import Landing from "./pages/Landing";
 
 function App() {
+
+  //use state to check if user is logged in
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <div className="App" onClick={console.log('test')}>
       <BrowserRouter>
-        
-        <Navbar />
+      <Routes>
+        <Route 
+          path="/landing"
+          element={<Landing />}
+        />
+
+        {loggedIn && 
+        <Navbar /> &&
         <div className="pages">
-          <Routes>
+          
             <Route 
               path="/"
               element={<Home />}
@@ -26,10 +36,7 @@ function App() {
               path="/pantry"
               element={<Pantry />}
             />
-            <Route 
-              path="/landing"
-              element={<Landing />}
-            />
+            
             {/* <Route 
               path="/recipes"
               element={<Recipes />}
@@ -49,8 +56,10 @@ function App() {
               path="/settings"
               element={<Settings />}
             />
-          </Routes>
-        </div> 
+          
+        </div> }
+        </Routes>
+        
       </BrowserRouter>
     </div>
   );
