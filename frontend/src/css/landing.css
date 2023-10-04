@@ -10,12 +10,6 @@
     text-decoration: none;
     padding: 50px 95px;
 }
-
-.landing-center-container {
-    display: flex;
-    justify-content: space-evenly;
-}
-
 .landing-nav-button {
     display: flex;
     justify-content: space-between;
@@ -55,3 +49,13 @@
     font-weight: 400;
     line-height: normal;
 }
+
+.landing-center-container {
+    display: flex;
+    /*justify-content: space-evenly;*/
+    padding-top: 100px;
+    padding-left: 95px;
+    font-style: italic;
+}
+
+
