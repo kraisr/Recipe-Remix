@@ -2,6 +2,7 @@ import * as React from 'react';
 import "../css/login.css";
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 function Login() {
   return (
@@ -21,6 +22,7 @@ function Login() {
         >
           <TextField id="filled-basic" label="Username or email" variant="filled" />
           <TextField id="filled-basic" label="Password" variant="filled" />
+          <Button variant="contained" style={{backgroundColor: '#fa7070', color: '#fff'}}>Log in</Button>
         </Box>
       </div>
     </div>
