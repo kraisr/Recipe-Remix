@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { useEffect, useRef } from 'react'
 
 //pages
@@ -7,6 +7,8 @@ import Pantry from "./pages/Pantry";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import DietaryPreferences from "./pages/Settings";
+
 
 function App() {
   return (
@@ -15,12 +17,12 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route 
+            <Route
               path="/"
               element={<Home />}
             />
 
-            <Route 
+            <Route
               path="/pantry"
               element={<Pantry />}
             />
@@ -35,7 +37,7 @@ function App() {
               element={<Community />}
             /> */}
 
-            <Route 
+            <Route
               path="/profile"
               element={<Profile />}
             />
@@ -44,8 +46,13 @@ function App() {
               path="/settings"
               element={<Settings />}
             />
+
+            <Route
+              path="/diatarypreference"
+              element={<Preference />}
+            />
           </Routes>
-        </div> 
+        </div>
       </BrowserRouter>
     </div>
   );
