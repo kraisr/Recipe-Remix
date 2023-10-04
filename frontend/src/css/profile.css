@@ -4,6 +4,7 @@
 .container{
     display:flex;
     justify-content: space-between;
+    padding-bottom: 100px;
 }
 
 .user-profile-header{
@@ -13,17 +14,14 @@
 .user-profile-card{
     background-color: #FBF2CF;
     margin: 20px 20px 20px 20px;
-    width: 150%;
-    height: 600px;
+    max-width: 150%;
+    min-width:150%;
+    height: 100%;
     border-radius: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-}
-
-.pfp-container{
-    /* border: red solid 1px; */
 }
 
 .profile-picture{
@@ -33,6 +31,7 @@
     border-radius: 100%;
     background-color: #C6EBC5;
     max-width: 100px;
+    margin-bottom: 10px;
 }
 
 .profile-picture i {
@@ -40,61 +39,53 @@
 }
 
 
-.profile-info{
-    display:flex;
+.profile-info {
+    display: flex;
     flex-direction: column;
-    position:relative;
-    border:red solid 1px;
-    top: -10%;
-    align-items: center;
-}
-
-
-
-
-
-
-.edit-profile{
-    padding: 0px 20px 0px 20px;
-    margin: 15px;
-    background-color: #9addf0;
-    border-radius: 10%;
-}
-.edit-profile:hover{
+    padding: 15px;
+    position: relative;
+    top: -30px;
+    right: -80px;
+    margin-right: auto;
+    min-width: 50%
+  }
+  
+  .profile-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .field-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .field-value {
+    font-size: 16px;
+  }
+  
+  .field-divider {
+    border: 0.5px solid #ccc;
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .edit-profile {
+    margin-top: 0px;
+  }
+  
+  .edit-profile h3 {
+    font-size: 18px;
+    color: #3897f0;
     cursor: pointer;
-}
+  }
+  
+  .edit-profile h3:hover {
+    text-decoration: underline;
+  }
+  
 
-.add-pic{
-    /* position: absolute; */
-    position:relative;
-    background-color: rgb(247, 192, 186);
-    border-radius: 90%;
-    padding: 5px;
-    width: 30px;
-    height:30px;
-    right: -150px;
-    top:-70px;
-}
-
-.add-pic:hover .remove-pic:hover{
-    cursor: pointer;
-}
-
-.add-pic i .remove-pic i{
-    font-size: 1.5rem;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.remove-pic {
-    /* position: absolute; */
-    position:relative;
-    background-color: rgb(247, 192, 186);
-    border-radius: 90%;
-    padding: 5px;
-    width:43px;
-    right: -180px;
-    top:-100px;
-}
 
 

@@ -93,7 +93,6 @@ const Navbar = () => {
                                 <span>{'>'}</span>
                             </Link>
 
-                            {/* Other submenu links */}
                         </div>
                     </div>
                 </div>
