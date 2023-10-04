@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../css/editprofile.css";
 
 
@@ -6,9 +6,14 @@ import "../css/editprofile.css";
 import UploadProfile from "./UploadProfile"
 
 
-function EditProfile({closeModal}) {
+function EditProfile({closeModal, applyChanges, profileData}) {
   const [editModal, setEditModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(profileData.image !== null && typeof profileData.image === 'object' ? '' : profileData.image || '');
+  const [name, setName] = useState(profileData.name !== null && typeof profileData.name === 'object' ? '' : profileData.name || '');
+  const [username, setUsername] = useState(profileData.username !== null && typeof profileData.username === 'object' ? '' : profileData.username || '');
+  const [bio, setBio] = useState(profileData.bio !== null && typeof profileData.bio === 'object' ? '' : profileData.bio || '');
+  const [link, setLink] = useState(profileData.link !== null && typeof profileData.link === 'object' ? '' : profileData.link || '');
+
 
   const toggleModal = () => {
     setEditModal(true);
@@ -22,12 +27,28 @@ function EditProfile({closeModal}) {
     setSelectedImage(image);
   }
 
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  }
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  }
+  const handleBioChange = (event) => {
+    setBio(event.target.value);
+  }
+  const handleLinkChange = (event) => {
+    setLink(event.target.value);
+  }
+
+  const handleApplyChanges = () => {
+    // Pass the updated data to the parent component
+    applyChanges({ name, username, bio, link, selectedImage });
+    closeModal();
+  }
+
   return (
     <div className="modal-background">
         <div className="modal-container">
-            <button onClick={exitModal}>
-              X
-            </button>
 
             <div className="title">
                 <h1>Edit Profile</h1>
@@ -53,22 +74,22 @@ function EditProfile({closeModal}) {
               <div className="user-info">
                 <div className="name">
                   <p>Name</p>
-                  <input type="text" />
+                  <input type="text" onChange={handleNameChange} value={name}/>
                 </div>
 
                 <div className="username">
                   <p>username</p>
-                  <input type="text" />
+                  <input type="text" onChange={handleUsernameChange} value={username}/>
                 </div>
 
                 <div className="bio">
                   <p>bio</p>
-                  <input type="text" />
+                  <input type="text" onChange={handleBioChange} value={bio}/>
                 </div>
 
-                <div className="Link">
+                <div className="Link" >
                   <p>Link</p>
-                  <input type="text" />
+                  <input type="text" onChange={handleLinkChange} value={link}/>
                 </div>
               </div>
 
@@ -76,7 +97,7 @@ function EditProfile({closeModal}) {
 
             <div className="footer">
                 <div className="cancel" onClick={exitModal}>Cancel</div>
-                <div className="apply" onClick={exitModal}>Apply Changes</div>
+                <div className="apply" onClick={handleApplyChanges}>Apply Changes</div>
             </div>
         </div>
     </div>

@@ -12,10 +12,22 @@ const Profile = () => {
 
   const [image, setImage] = useState(null);
   const [editModal, setEditModal] = useState(false);
-  const inputFile = useRef(null);
+  const [name, setName] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [bio, setBio] = useState(null);
+  const [link, setlink] = useState(null);
 
   const toggleModal = () => {
     setEditModal(true);
+  }
+
+  const applyChanges = (data) => {
+    // Update the profile data
+    setName(data.name);
+    setUsername(data.username);
+    setBio(data.bio);
+    setlink(data.link);
+    setImage(data.selectedImage)
   }
 
  
@@ -24,53 +36,44 @@ const Profile = () => {
             
             <div className="left-container">
                 <div className="user-profile-header">
-                    <h1>User's Profile</h1>
+                    {!username ? (
+                        <h2>User's Profile</h2>
+                    ): (
+                        <h2>{username}'s Profile</h2>
+                    )}
+                    
                 </div>
 
                 <div className="user-profile-card">
                     <div className="pfp-container">
                         
-                        <div className="profile-picture">
-                            {image ? (
-                                <img
-                                    alt="not found"
-                                    max-width={"5px"}
-                                    height={"30px"}
-                                    src={URL.createObjectURL(image)}
-                                />
-                            ) : (
-                                <i className="fa-solid fa-user"></i>
-                            )}          
-                        </div>
-                        
-                        {/* <input
-                            style={{ display: "none" }}
-                            ref={inputFile}
-                            onChange={handleFileUpload}
-                            type="file"
-                        /> */}
-                        
-                        {/* <div className="add-pic" onClick={onButtonClick}>
-                            <i class="fa-solid fa-camera"></i>
-                        </div>
-
-                        <div className="remove-pic" onClick={() => setImage(null) }>
-                            <i class="fa-solid fa-trash"></i>
-                        </div> */}
+                    <div className={`${!image ? "profile-picture": " "}`} onClick={toggleModal}>
+                    {image ? (
+                        <img src={image} alt="Profile Picture" />
+                      ) : (
+                        <i className="fa-solid fa-user"></i>
+                    )}
+                  </div>
                         
                     </div>
                     
 
                     <div className="profile-info">
-                        <div className="name">
-                            <h2>User's Name</h2>
+                        <div className="profile-field">
+                        <span className="field-label">Name</span>
+                        <span className="field-value">{name}</span>
                         </div>
-                        <div className="bio-container">
-                            <p>Test bio test etst testst</p>
+                        <hr class="field-divider" />
+                        
+                        <div className="profile-field">
+                        <span className="field-label">Bio</span>
+                        <span className="field-value">{bio}</span>
                         </div>
-
-                        <div className="link-container">
-                            <p>Links</p>
+                        <hr class="field-divider" />
+                        
+                        <div className="profile-field">
+                        <span className="field-label">Link</span>
+                        <span className="field-value">{link}</span>
                         </div>
                     </div>
 
@@ -78,7 +81,11 @@ const Profile = () => {
                         <h3>Edit Profile</h3>
                     </div>
 
-                    {editModal && <EditProfile closeModal={setEditModal}/>}
+                    {editModal && <EditProfile 
+                                    closeModal={setEditModal} 
+                                    applyChanges={applyChanges}
+                                     profileData={{ name, username, bio, link, image }}
+                                    />}
                 </div>
                 
             </div>
