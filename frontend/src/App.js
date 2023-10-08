@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Pantry from "./pages/Pantry";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
+import Preferences from "./pages/Preferences";
 import Settings from "./pages/Settings";
 import Landing from "./pages/Landing";
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/pantry" element={<Pantry />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/preferences" element={<Preferences />} />
             </>
           ) : (
             <Route path="/" element={<Landing setLoggedIn={setLoggedIn}/>} />

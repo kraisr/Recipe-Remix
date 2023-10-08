@@ -90,11 +90,11 @@ const Navbar = () => {
                                 <span>{'>'}</span>
                             </Link>
 
-                            {/* <Link to="/../settings" className="sub-menu-link" onClick={toggleMenu}>
+                            <Link to="/../preferences" className="sub-menu-link" onClick={toggleMenu}>
                                 <i className="fa-solid fa-gear"></i>
                                 <p>Preferences</p>
                                 <span>{'>'}</span>
-                            </Link> */}
+                            </Link>
 
                             <Link to="/../help" className="sub-menu-link" onClick={toggleMenu}>
                                 <i className="fa-solid fa-user"></i>
