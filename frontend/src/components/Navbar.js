@@ -45,15 +45,24 @@ const Navbar = () => {
 
     const handleOutsideClick = (event) => {
         const clickedElement = event.target;
-        const isProfileImageClicked = (clickedElement && clickedElement.classList?.contains('profileImage')) || ((clickedElement && clickedElement.parentElement) && clickedElement.classList?.contains('corner-profile'));        
+        const isProfileImageClicked =
+            (clickedElement && clickedElement.classList?.contains('profileImage')) ||
+            ((clickedElement && clickedElement.parentElement) &&
+                clickedElement.classList?.contains('corner-profile'));
+
         if (isProfileImageClicked) {
-            toggleMenu();
-        }
-        else {
-            
+            if (window.innerWidth <= 768) {
+                // Navigate to the profile page when clicking the profile image on smaller screens
+                // Replace "/../profile" with the actual URL for the profile page
+                window.location.href = "http://localhost:3000/profile";
+            } else {
+                // Open/close the submenu for larger screens
+                toggleMenu();
+            }
+        } else {
             isSubMenuOpen = false;
             setIsSubMenuOpen(isSubMenuOpen);
-        }   
+        }  
     };
 
     useEffect(() => {
