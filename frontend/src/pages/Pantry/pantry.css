@@ -89,6 +89,7 @@ img {
 .ingredient-bubble:hover {
     transform: scale(1.1);
     cursor: pointer;
+}
 
 .hamburger-icon {
     display: none;
