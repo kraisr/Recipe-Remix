@@ -75,6 +75,9 @@ const LoginForm = ({ onNavigateToRegister }) => {
     onSubmitProps.resetForm();
 
     if (loggedIn) {
+
+      // localStorage.setItem('userId', loggedIn.user._id);
+      
       // Use state modifier to store token and user
       dispatch(
         setLogin({
@@ -82,6 +85,7 @@ const LoginForm = ({ onNavigateToRegister }) => {
           user: loggedIn.user,
         })
       )
+
       navigate("/");
     }
   };
