@@ -92,7 +92,9 @@ const LoginForm = ({ onNavigateToRegister }) => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Typography variant="h5">Login</Typography>
+      <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+        Login
+      </Typography>
       <Formik 
         onSubmit={handleSubmit} 
         initialValues={initialValuesLogin} 
