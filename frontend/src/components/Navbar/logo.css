@@ -1,6 +1,12 @@
 .logo {
     width: 100%;
     display: flex;
-    justify-content: center;
+    display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    width: 150px;
+    height: 150px;
 }

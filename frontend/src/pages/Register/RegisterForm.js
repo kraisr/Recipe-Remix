@@ -79,7 +79,9 @@ const RegisterForm = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Typography variant="h5">Register</Typography>
+      <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+        Register
+      </Typography>
       <Formik 
         onSubmit={handleSubmit} 
         initialValues={initialValuesRegister} 
