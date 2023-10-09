@@ -1,6 +1,7 @@
 import "./pantry.css";
-import logoImg from "../../images/Vector.png"
+import logoImg from "../../images/Vector.png";
 import React, { useEffect, useRef, useState } from "react";
+
 const Pantry = () => {
     const [isPantryOpen, setIsPantryOpen] = useState(false);
     const [isRecipeOpen, setIsRecipeOpen] = useState(false);
@@ -79,3 +80,6 @@ const Pantry = () => {
 }
 
 export default Pantry;
+
+
+
