@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
     googleSignIn: {
         type: Boolean,
         required: true,
+        default: false,
         min: 2,
         // Add more configuration for password requirements
     },
