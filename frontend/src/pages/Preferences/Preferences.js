@@ -76,6 +76,11 @@ const Preferences = () => {
           [preferenceName]: updatedValue,
         }));
         console.log(`Updated ${preferenceName} preference successfully. `, updatedValue);
+
+        if (preferenceName === 'others') {
+          // Toggle the showSaveCancel state based on whether the checkbox is checked
+          setShowSaveCancel(updatedValue);
+        }
       } else {
         console.error(`Failed to update ${preferenceName} preference.`);
       }
@@ -245,7 +250,7 @@ const Preferences = () => {
           </li>
         </ul>
       </div>
-
+      
       {showSaveCancel && <SearchBar />}
 
       {showSaveCancel && (
