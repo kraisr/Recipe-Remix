@@ -15,7 +15,8 @@ const Profile = () => {
   const [name, setName] = useState(null);
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
-  const [link, setlink] = useState(null);
+  const [link, setLink] = useState(null);
+  const[selectedImage, setSelectedImage] = useState(null);
 
   const toggleModal = () => {
     setEditModal(true);
@@ -23,15 +24,17 @@ const Profile = () => {
 
   const applyChanges = (data) => {
     // Update the profile data
-    setName(data.name);
+    setName(data.firstName);
+    //setName(data.name);
     setUsername(data.username);
     setBio(data.bio);
-    setlink(data.link);
-    setImage(data.selectedImage)
+    setLink(data.link);
+    setImage(data.image);
   }
 
   useEffect(() => {
-    const fetchUserName = async () => {
+    //used for getting and displaying the name of the user on the profile page
+    const fetchName = async () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -52,13 +55,14 @@ const Profile = () => {
         }
   
         const data = await response.json();
-        setName(data.firstName);
+        applyChanges(data);
+
       } catch (error) {
         console.error('Error fetching user name:', error);
       }
     };
   
-    fetchUserName();
+    fetchName();
   }, []);
   
 

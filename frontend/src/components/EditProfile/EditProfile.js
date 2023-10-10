@@ -4,7 +4,7 @@ import "./editProfile.css";
 
 //components
 import UploadProfile from "./UploadProfile"
-
+import uploadImageToS3 from "../UploadImagetoS3/UploadImagetoS3";
 
 function EditProfile({closeModal, applyChanges, profileData}) {
   const [editModal, setEditModal] = useState(false);
@@ -23,9 +23,10 @@ function EditProfile({closeModal, applyChanges, profileData}) {
     closeModal()
   }
 
-  const handleImageChange = (image) => {
-    setSelectedImage(image);
-  }
+  const handleImageChange = async (file) => {
+    setSelectedImage(file);
+    
+  };
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -40,10 +41,71 @@ function EditProfile({closeModal, applyChanges, profileData}) {
     setLink(event.target.value);
   }
 
+  //post request to server
+  const postChanges = () => {
+
+    const updatedData = {
+      firstName: name,
+      username: username,
+      bio: bio,
+      link: link,
+      image: selectedImage,
+    };
+
+    // Make a POST request to update the user's profile
+    fetch('http://localhost:8080/user/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(updatedData)
+    })
+    .then(response => {
+      console.log("server response:", response);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // Assuming the response contains the updated user data
+      return response.json();
+    })
+    .then(data => {
+      // Update the profile data in the parent component
+      console.log("data", data.user);
+      applyChanges(data.user);
+      closeModal();
+    })
+    .catch(error => {
+      console.error('Error updating profile:', error);
+      // Handle errors appropriately (e.g., display an error message to the user)
+    });
+  }
+
   const handleApplyChanges = () => {
     // Pass the updated data to the parent component
-    applyChanges({ name, username, bio, link, selectedImage });
+    //applyChanges({ name, username, bio, link, image: selectedImage });
     closeModal();
+    // if (file) {
+    //   // Log the MIME type (if available)
+  
+    //   const bucketName = 'ryan-leonard-bucket1';
+    //   const timestamp = Date.now();
+    //   const key = `user_${username}_${timestamp}`;
+  
+    //   try {
+    //     const imageUrl = await uploadImageToS3(file, bucketName, key);
+    //     console.log(imageUrl);
+    //     // Update the selectedImage state with the image URL
+    //     setSelectedImage(imageUrl);
+    //   } catch (error) {
+    //     console.error('Error uploading image to S3:', error);
+    //     // Handle the error, e.g., display an error message to the user
+    //   }
+    // } else {
+    //   console.error('No file selected.');
+    // }
+    postChanges();
+    
   }
 
   return (

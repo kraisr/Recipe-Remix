@@ -1,11 +1,12 @@
 import express from "express";
 import {user} from "../controllers/user.js";
-import { requestResetPassword, resetPassword } from "../controllers/resetPassword.js";
+
 
 const router = express.Router();
 
 /* GET USER DATA */
-router.get("/user", user);
+router.get("/user", getUser);
+router.post("/user", updateUser);
 
 /* FORGOT PASSWORD */
 router.post("/requestResetPassword", requestResetPassword);

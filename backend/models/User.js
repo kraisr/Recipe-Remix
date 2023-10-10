@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
         unique: true,
         max: 50,
     },
+    username: {
+        type:String,
+    },
     password: {
         type: String,
         required: function() {
@@ -39,6 +42,18 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    bio: {
+        type:String,
+        required:false,
+    },
+    link: {
+        type:String,
+        required:false,
+    },
+    image: {
+        type: String, 
+        required: false,
+    }
     pantry: [{
         ingredientName: {
             type: String,
