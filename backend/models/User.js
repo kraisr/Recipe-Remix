@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
         unique: true,
         max: 50,
     },
+    username: {
+        type:String,
+    },
     password: {
         type: String,
         required: true,
@@ -29,6 +32,18 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    bio: {
+        type:String,
+        required:false,
+    },
+    link: {
+        type:String,
+        required:false,
+    },
+    image: {
+        type: String, 
+        required: false,
+    }
 });
 
 // Hash the password before saving the user model
