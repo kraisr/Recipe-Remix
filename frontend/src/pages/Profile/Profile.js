@@ -95,13 +95,13 @@ const Profile = () => {
                         <span className="field-label">Name</span>
                         <span className="field-value">{name}</span>
                         </div>
-                        <hr class="field-divider" />
+                        <hr className="field-divider" />
                         
                         <div className="profile-field">
                         <span className="field-label">Bio</span>
                         <span className="field-value">{bio}</span>
                         </div>
-                        <hr class="field-divider" />
+                        <hr className="field-divider" />
                         
                         <div className="profile-field">
                         <span className="field-label">Link</span>
