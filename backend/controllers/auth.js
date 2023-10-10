@@ -98,7 +98,7 @@ export const loginGoogle = async (req, res) => {
             });
             // console.log(user);
             user = await user.save();
-        } else {
+        } else if (!user.googleSignIn) {
             return res.status(400).json({ error: "User registered with email. Please use login page." });
         }
 
