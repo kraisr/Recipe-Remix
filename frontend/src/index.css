@@ -11,9 +11,9 @@
 :root {
   --primary: #1aac83;
   --error: #e7195a;
-  --color-primary: #0b6623;
+  --color-primary: #C6EBC5;
 }
-.light-mode {
+.dark-mode {
   --primary: #1aac83;
   --error: #e7195a;
   --color-primary: #0b6623; /* Light mode background color */
