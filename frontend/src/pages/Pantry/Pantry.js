@@ -1,85 +1,71 @@
 import "./pantry.css";
 import logoImg from "../../images/Vector.png";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Pantry = () => {
-    const [isPantryOpen, setIsPantryOpen] = useState(false);
-    const [isRecipeOpen, setIsRecipeOpen] = useState(false);
-    const handleDocumentClick = () => {
-        if (isPantryOpen) {
-            setIsPantryOpen(false);
-        }
-        if (isRecipeOpen) {
-            setIsRecipeOpen(false);
-        }
-    };
-    useEffect(() => {
-        // Add the click event listener when the component mounts
-        document.addEventListener('click', handleDocumentClick);
+    const [pantry, setPantry] = useState([]);
 
-        // Cleanup: remove the event listener when the component unmounts
-        return () => {
-            document.removeEventListener('click', handleDocumentClick);
-        };
-    }, [isPantryOpen]);
 
     useEffect(() => {
-        // Add the click event listener when the component mounts
-        document.addEventListener('click', handleDocumentClick);
-
-        // Cleanup: remove the event listener when the component unmounts
-        return () => {
-            document.removeEventListener('click', handleDocumentClick);
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found');
+                }
+    
+                const response = await fetch("http://localhost:8080/user/pantry", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    method: "GET",
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+    
+                const data = await response.json();
+                setPantry(data.pantry);
+            } catch (error) {
+                console.error('Error fetching user pantry:', error);
+            }
         };
-    }, [isRecipeOpen]);
-    return ( 
-            <div className="pantry-container">
-                <div 
-                className="hamburger-icon" 
-                style={{ display: isPantryOpen ? 'none' : 'flex' }} 
-                onClick={(e) => {
-                    e.stopPropagation();  // Stop the click event from bubbling up
-                    setIsPantryOpen(!isPantryOpen);
-                }}
-                >
-                    My Pantry
-                </div>
+    
+        fetchUserData();
+    }, []);
+    
+    
 
-                <div className={`pantry-left-container ${isPantryOpen ? 'open' : ''}`}>
-                     <h2>
-                        My Pantry
-                    </h2>
-                </div>
-
-                <div className="pantry-center-container">
-                    <img alt="remix" src={logoImg} height="325px" width="270px" />                        
-                        <button type="button" class="pantry-button">
-                               REMIX
-                        </button>
-                 </div>
-                 
-                 <div 
-                className="recipe-tag" 
-                style={{ display: isRecipeOpen ? 'none' : 'flex' }} 
-                onClick={(e) => {
-                    e.stopPropagation();  // Stop the click event from bubbling up
-                    setIsRecipeOpen(!isRecipeOpen);
-                }}
-                >
-                    Matched Recipes
-                </div>
-                 
-                 <div className={`pantry-right-container ${isRecipeOpen ? 'open' : ''}`}>
-                    <h2>
-                        Matched Recipes
-                    </h2>
+    return (
+        <div className="container">
+            {/* Left Container - Pantry */}
+            <div className="left-container">
+                <h3>My Pantry</h3>
+                <ul>
+                    {pantry.map((item, index) => (
+                        <li key={index}>{item.ingredientName}</li>
+                    ))}
+                </ul>
+            </div>
+    
+            {/* Center Container - Remix Button */}
+            <div className="center-container">
+                {/* Replace with your logoImg or Remix Button */}
+                <div className="remix-button">
+                    Remix
                 </div>
             </div>
-
+    
+            {/* Right Container - Recipe Matching (To be implemented later) */}
+            <div className="right-container">
+                {/* Placeholder for Recipe Matching */}
+                <h3>Matched Recipes</h3>
+            </div>
+        </div>
     );
+    
 }
 
 export default Pantry;
-
-
-

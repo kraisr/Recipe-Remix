@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-import User from "../models/User.js"; // Import the User model
 
 
 
@@ -48,41 +47,5 @@ export const searchIngredients = async (req, res) => {
     }
 };
 
-
-
-export const addIngredientToPantry = async (req, res) => {
-    const { userId, ingredient } = req.body;
-
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        user.pantry.push({ ingredientName: ingredient });
-        await user.save();
-
-        res.json({ message: "Ingredient added to pantry successfully" });
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Internal Server Error", details: error.message });
-    }
-};
-
-export const getPantryIngredients = async (req, res) => {
-    const { userId } = req.query;
-
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        res.json({ pantry: user.pantry });
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Internal Server Error", details: error.message });
-    }
-};
 
 

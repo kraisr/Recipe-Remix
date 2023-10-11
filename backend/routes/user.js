@@ -1,10 +1,15 @@
 import express from "express";
-import {user} from "../controllers/user.js";
+import {addIngredient, getFromPantry, user} from "../controllers/user.js";
 
 
 const router = express.Router();
 
 
 router.get("/user", user);
+
+
+router.post("/pantry", addIngredient);
+router.get("/pantry", getFromPantry);
+
 
 export default router;

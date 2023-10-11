@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Searchbar.css";
 
 function SearchBar() {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
 
     function highlightMatch(text, query) {
         const index = text.toLowerCase().indexOf(query.toLowerCase());
@@ -56,15 +57,20 @@ function SearchBar() {
 
     const addToPantry = async (ingredient) => {
         try {
-            const userId = localStorage.getItem('userId'); // You need to get the logged-in user's ID
-            const response = await fetch('http://localhost:8080/api/add-ingredient', {
-                method: 'POST',
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found');
+              }
+            const response = await fetch('http://localhost:8080/user/pantry',
+            {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`  // Add this line to include the token in the request header
                 },
-                body: JSON.stringify({ userId, ingredient })
-            });
-    
+                body: JSON.stringify({ ingredientName: ingredient })  // Sending the ingredient data
+              });
+
             const data = await response.json();
             if (response.ok) {
                 console.log(data.message); // Ingredient added successfully
@@ -75,7 +81,9 @@ function SearchBar() {
             console.error("Error adding ingredient to pantry:", error);
         }
     };
-    
+
+
+
 
     return (
         <div>
@@ -112,4 +120,3 @@ function SearchBar() {
 }
 
 export default SearchBar;
-
