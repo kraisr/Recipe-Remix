@@ -62,7 +62,7 @@ export const login = async (req, res) => {
         
         // Find specified user given email using mongoose
         const user = await User.findOne({ email: email });
-        console.log(user);
+        
         // If user does not exist, return error
         if (!user) {
         return res.status(400).json({ error: "Invalid credentials." });
@@ -182,7 +182,7 @@ export const sendConfirmationEmail = async (req, res) => {
 export const confirmEmail = async (req, res) => {
     try {
         const { token } = req.params;  // Extract token from URL parameters
-
+        
         // Decode the token and find the user
         const { userId } = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findOne({ _id: userId, emailVerificationToken: token });
