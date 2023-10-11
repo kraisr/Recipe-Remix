@@ -120,7 +120,7 @@
     margin: 0; /* Add some margin for spacing */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1500px) {
     
     .landing-container {
         background: #C6EBC5;
@@ -143,7 +143,7 @@
         padding-left: 50px;
     }
     .landing-nav h2 {
-        margin-right: 200px;
+        margin-right: 20%;
     }
 
     .nav-content {
@@ -160,12 +160,15 @@
     .nav-content .landing-nav-button {
         flex-direction: row; /* Makes buttons display side-by-side on larger screens */
         gap: 20px; /* Provides a gap between the buttons */
-        padding-left: 500px;
+        padding-left: 275%;
+        width: 100%;
+        height: auto;
     }
 
     .landing-login {
-        width: 100px;
+        width: 30%;
         height: 50px;
+        position: relative;
         flex-shrink: 0;
         border-radius: 36px;
         border: 1px solid #255418;
