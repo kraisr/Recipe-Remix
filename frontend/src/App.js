@@ -16,6 +16,7 @@ import Register from "./pages/Register/Register";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPasswordPage from "./components/ForgotPassword/ResetPasswordPage";
 import EmailConfirmation from "./pages/Register/EmailConfirmation";
+import Help from "./pages/Help/Help";
 
 import Landing from "./pages/Landing/Landing";
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/forgot-password" element={isLoggedIn ? <Navigate to="/" /> : <ForgotPassword />} />
           <Route path="/resetPassword/:token" element={isLoggedIn ? <Navigate to="/" /> : <ResetPasswordPage />} />
           <Route path="/confirm-email/:token" element={isLoggedIn ? <Navigate to="/" /> : <EmailConfirmation />} />
+          <Route path="/help" element={isLoggedIn ? <Help /> : <Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
     </div>
