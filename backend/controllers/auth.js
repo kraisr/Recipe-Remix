@@ -13,10 +13,11 @@ export const register = async (req, res) => {
         // console.log(req.body);
         const { 
             firstName, 
-            lastName, 
+            lastName,
             email, 
             password 
         } = req.body;
+        console.log(req.body);
 
         // Find specified user given email using mongoose
         const oldUser = await User.findOne({ email: email });
@@ -29,6 +30,9 @@ export const register = async (req, res) => {
             return res.status(400).json({ error: "User already registered." });
         }
 
+        // Extract username from email
+        const username = email.substr(0, email.indexOf("@"));
+
         // Password encryption with bcrypt salt and hash
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
@@ -38,11 +42,13 @@ export const register = async (req, res) => {
             firstName,
             lastName,
             email,
+            username,
             password: passwordHash,
         });
+        console.log(newUser);
         // Send back the saved user to the frontend
         const savedUser = await newUser.save();
-
+        console.log(savedUser);
         // // Send a confirmation email
         // await sendConfirmationEmail(req, res);
 

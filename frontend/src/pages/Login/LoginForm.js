@@ -74,13 +74,14 @@ const LoginForm = ({ onNavigateToRegister }) => {
         );
 
         // Store the token in localStorage (or somewhere else)
-        localStorage.setItem('token', loggedIn.token);
+        localStorage.setItem("token", loggedIn.token);
+        localStorage.setItem("email", loggedIn.user.email);
 
-        // Navigate to the home page (or wherever you'd like)
+        // Navigate to the home page (or wherever you"d like)
         navigate("/");
       }
     } catch (error) {
-        console.error('Error during login:', error);
+        console.error("Error during login:", error);
         // Handle error accordingly
     }
   }
@@ -130,7 +131,8 @@ const LoginForm = ({ onNavigateToRegister }) => {
         })
       );
 
-      localStorage.setItem('token', loggedIn.token);
+      localStorage.setItem("token", loggedIn.token);
+      localStorage.setItem("email", loggedIn.user.email);
       navigate("/");
     } else {
       setErrorMessage(loggedIn.error);
@@ -182,18 +184,18 @@ const LoginForm = ({ onNavigateToRegister }) => {
               autoFocus
               sx={{ 
                 bgcolor: "#fbf2cf",
-                '& label.Mui-focused': {
-                  color: '#6b9466',  // Color of the label when input is focused
+                "& label.Mui-focused": {
+                  color: "#6b9466",  // Color of the label when input is focused
                 },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#a1c298',
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#a1c298",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#88b083',
+                  "&:hover fieldset": {
+                    borderColor: "#88b083",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#6b9466',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#6b9466",
                   },
                 },
              }}
@@ -216,18 +218,18 @@ const LoginForm = ({ onNavigateToRegister }) => {
               autoComplete="new-password"
               sx={{ 
                 bgcolor: "#fbf2cf",
-                '& label.Mui-focused': {
-                  color: '#6b9466',  // Color of the label when input is focused
+                "& label.Mui-focused": {
+                  color: "#6b9466",  // Color of the label when input is focused
                 },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: '#a1c298',
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#a1c298",
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#88b083',
+                  "&:hover fieldset": {
+                    borderColor: "#88b083",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#6b9466',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#6b9466",
                   },              
                 },
               }}
@@ -255,7 +257,7 @@ const LoginForm = ({ onNavigateToRegister }) => {
                   fontSize: "0.8rem",
                   "&:hover": {
                     color: "#455A64",
-                    backgroundColor: "transparent", // Ensure that the background color doesn't change
+                    backgroundColor: "transparent", // Ensure that the background color doesn"t change
                   }
                 }}
                 onClick={handleForgotPasswordClick}
@@ -299,7 +301,7 @@ const LoginForm = ({ onNavigateToRegister }) => {
               }}
               onClick={handleRegisterClick}
             >
-              Don't have an account? Register
+              Don"t have an account? Register
             </Button>
             
             {/* Google Sign in Button */}

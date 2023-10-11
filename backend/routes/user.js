@@ -1,6 +1,7 @@
 import express from "express";
 import {getUser, updateUser} from "../controllers/user.js";
 import {requestResetPassword, resetPassword} from"../controllers/resetPassword.js"
+import { sendEmail } from "../controllers/send-email.js";
 
 
 const router = express.Router();
@@ -12,5 +13,8 @@ router.post("/user", updateUser);
 /* FORGOT PASSWORD */
 router.post("/requestResetPassword", requestResetPassword);
 router.post("/resetPassword", resetPassword);
+
+/* CONTACT FORM */
+router.post("/send-email", sendEmail);
 
 export default router;
