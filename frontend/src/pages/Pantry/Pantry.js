@@ -1,32 +1,29 @@
 import "./pantry.css";
 import logoImg from "../../images/Vector.png";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Pantry = () => {
-    const [isPantryOpen, setIsPantryOpen] = useState(false);
-    const [isRecipeOpen, setIsRecipeOpen] = useState(false);
-    const handleDocumentClick = () => {
-        if (isPantryOpen) {
-            setIsPantryOpen(false);
-        }
-        if (isRecipeOpen) {
-            setIsRecipeOpen(false);
-        }
-    };
-    useEffect(() => {
-        // Add the click event listener when the component mounts
-        document.addEventListener('click', handleDocumentClick);
-
-        // Cleanup: remove the event listener when the component unmounts
-        return () => {
-            document.removeEventListener('click', handleDocumentClick);
-        };
-    }, [isPantryOpen]);
+    const [pantryIngredients, setPantryIngredients] = useState([]);
 
     useEffect(() => {
-        // Add the click event listener when the component mounts
-        document.addEventListener('click', handleDocumentClick);
+        const fetchPantryIngredients = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found');
+                }
+                const response = await fetch("http://localhost:8080/user/pantry", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
 
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+              
         // Cleanup: remove the event listener when the component unmounts
         return () => {
             document.removeEventListener('click', handleDocumentClick);
@@ -45,41 +42,41 @@ const Pantry = () => {
                     My Pantry
                 </div>
 
-                <div className={`pantry-left-container ${isPantryOpen ? 'open' : ''}`}>
-                     <h2>
-                        My Pantry
-                    </h2>
-                </div>
+                const data = await response.json();
+                setPantryIngredients(data);
+            } catch (error) {
+                console.error("Failed to fetch pantry ingredients:", error);
+            }
+        };
 
-                <div className="pantry-center-container">
-                    <img alt="remix" src={logoImg} height="325px" width="270px" />                        
-                        <button type="button" class="pantry-button">
-                               REMIX
-                        </button>
-                 </div>
-                 
-                 <div 
-                className="recipe-tag" 
-                style={{ display: isRecipeOpen ? 'none' : 'flex' }} 
-                onClick={(e) => {
-                    e.stopPropagation();  // Stop the click event from bubbling up
-                    setIsRecipeOpen(!isRecipeOpen);
-                }}
-                >
-                    Matched Recipes
-                </div>
-                 
-                 <div className={`pantry-right-container ${isRecipeOpen ? 'open' : ''}`}>
-                    <h2>
-                        Matched Recipes
-                    </h2>
+        fetchPantryIngredients();
+    }, []);
+    
+    return (
+        <div className="pantry-container">
+            <div className="pantry-left-container">
+                <div className="pantry-title">My Pantry</div> {/* Replaced <h2> to match our new styles */}
+                <div className="ingredients-grid">
+                    {pantryIngredients.map(ingredient => (
+                         <div key={ingredient._id} className="ingredient-bubble">
+                         {ingredient.ingredientName}
+                         <button className="delete-button">Delete</button>
+                     </div>
+                    ))}
                 </div>
             </div>
 
+            <div className="pantry-center-container">
+                <img alt="remix" src={logoImg} height="325px" width="270px" />  
+                <button type="button" className="pantry-button">
+                    REMIX
+                </button>          
+            </div>
+            <div className="pantry-right-container">
+                Matched Recipes
+            </div>
+        </div>
     );
 }
 
 export default Pantry;
-
-
-
