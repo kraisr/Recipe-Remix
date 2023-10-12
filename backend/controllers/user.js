@@ -207,6 +207,11 @@ export const mode = async (req, res) => {
         // Update the specific preference name with the updated value
         user.reminder = reminder;
   
+        if (!reminder) {
+            user.reminderSetting.everydayAt.bool = false;
+            console.log(`Updated user.reminderSetting.everydayAt.bool`);
+        }
+
         // Save the updated user object
         const updatedUser = await user.save();
   
@@ -224,7 +229,12 @@ export const mode = async (req, res) => {
 export const reminderSetting = async (req, res) => {
     try {
         const { email, preferenceEmail, everydayAt, everyHour, everydayAtTime, everyHourTime } = req.body;
-
+        console.log("email is ", email);
+        console.log("preferenceEmail is ", preferenceEmail);
+        console.log("data.reminderSetting.everydayAt is ", everydayAt);
+        console.log("data.reminderSetting.everyHour is ", everyHour);
+        console.log("data.reminderSetting.everydayAt.time is ", everydayAtTime);
+        console.log("data.reminderSetting.everyHour.time is ", everyHourTime);
         // Find the user by email
         const user = await User.findOne({ email: email });
 
@@ -235,9 +245,9 @@ export const reminderSetting = async (req, res) => {
         // Update the everydayAt and everydayAtTime fields
         user.reminderSetting.email = preferenceEmail;
         user.reminderSetting.everydayAt.bool = everydayAt;
-        user.reminderSetting.everyHour.bool = everyHour;
+        //user.reminderSetting.everyHour.bool = everyHour;
         user.reminderSetting.everydayAt.time = everydayAtTime;
-        user.reminderSetting.everyHour.time = everyHourTime;
+        //user.reminderSetting.everyHour.time = everyHourTime;
 
         // Save the updated user object
         const updatedUser = await user.save();
