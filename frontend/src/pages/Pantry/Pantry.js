@@ -40,9 +40,10 @@ const Pantry = () => {
                 <div className="pantry-title">My Pantry</div> {/* Replaced <h2> to match our new styles */}
                 <div className="ingredients-grid">
                     {pantryIngredients.map(ingredient => (
-                        <div key={ingredient._id} className="ingredient-bubble">
-                            {ingredient.ingredientName}
-                        </div>
+                         <div key={ingredient._id} className="ingredient-bubble">
+                         {ingredient.ingredientName}
+                         <button className="delete-button">Delete</button>
+                     </div>
                     ))}
                 </div>
             </div>
