@@ -30,8 +30,6 @@
     padding-top: 20px;
     padding: 20px 10px; /* Reduced side padding */
     overflow-x: hidden; /* Ensure no horizontal scrolling */
-
-
 }
 
 img {
@@ -84,9 +82,8 @@ img {
     flex-direction: column;
     gap: 10px;
     width: 100%; /* Set to full width */
-    overflow-y: auto;
+    overflow-y: auto; /* Allow vertical scrolling for the entire list */
     max-height: 550px;
-    overflow-x: hidden; /* Ensure no horizontal scrolling */
     padding-top: 10px;
     padding-left: 0; /* Remove left padding */
     padding-right: 0; /* Remove right padding */
@@ -97,18 +94,12 @@ img {
     transform: scale(1.1);
     cursor: pointer;
     z-index: 1;
+    background-color: #e8d8ab; /* Light gray background for highlight */
+    border: 1px solid #ffffff; /* Optional border for emphasis */
+    border-radius: 0 10px 10px 0;
+
 }
 
-
-.ingredients-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: calc(100% - 10px); /* Adjust width considering padding */
-    overflow-y: auto;
-    max-height: 550px;
-    padding-top: 10px;
-}
 
 .ingredient-bubble {
     display: flex;
@@ -121,9 +112,8 @@ img {
     box-shadow: none;
     height: 40px;
     line-height: 40px;
-    overflow-x: hidden; /* Hide overflow */
-    border-bottom: 1px solid #4e3f1d;
     box-sizing: border-box; /* Include padding in width calculation */
+    /* Remove any overflow properties */
 }
 
 .delete-button {
@@ -134,6 +124,7 @@ img {
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s;
+    
 }
 
 .delete-button:hover {
