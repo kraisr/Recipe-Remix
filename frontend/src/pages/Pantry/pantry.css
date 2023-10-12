@@ -11,26 +11,27 @@
 
 .pantry-title { /* Style for the "My Pantry" text */
     margin-bottom: 10px;
+    margin-top: 0; /* Remove top margin */
     font-size: 24px;       /* You can adjust this as per your preference */
     font-weight: bold;     /* Making the text bold */
     text-align: center;    /* Centering the text */
 }
 .pantry-left-container{
     display: flex;
+    flex-direction: column;
     background-color: #FBF2CF;
-    justify-self: start;
-    justify-content: center;
     width: 50vw;
     height: 650px;
     border-radius: 0 25px 25px 0;
     box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.25);
-    position: static;
-    transform: none;
-    overflow-x: hidden;
-    overflow-y: auto;  /* This allows vertical scrolling */
-    max-height: 650px; /* Adjust if necessary; ensures a fixed height */
-    flex-direction: column;  /* Make sure content stacks vertically */
-    align-items: center;     /* Center items horizontally */
+    overflow-y: auto;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the top */
+    padding-top: 20px;
+    padding: 20px 10px; /* Reduced side padding */
+    overflow-x: hidden; /* Ensure no horizontal scrolling */
+
+
 }
 
 img {
@@ -41,10 +42,7 @@ img {
 .pantry-center-container{
     display: flex;
     flex-direction: column;
-    justify-self: center;
     justify-content: center;
-    justify-content: space-between;
-    text-align: center;
     align-items: center;
     padding-left: 1px;
     padding-right: 1px;
@@ -53,7 +51,6 @@ img {
 .pantry-right-container{
     display: flex;
     background-color: #FBF2CF;
-    justify-self: end;
     justify-content: center;
     width: 50vw;
     height: 650px;
@@ -83,45 +80,65 @@ img {
 }
 
 .ingredients-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 10px;
-    padding: 20px;
+    width: 100%; /* Set to full width */
+    overflow-y: auto;
+    max-height: 550px;
+    overflow-x: hidden; /* Ensure no horizontal scrolling */
+    padding-top: 10px;
+    padding-left: 0; /* Remove left padding */
+    padding-right: 0; /* Remove right padding */
 }
 
 
 .ingredient-bubble:hover {
     transform: scale(1.1);
     cursor: pointer;
+    z-index: 1;
 }
 
 
 .ingredients-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px; /* Adjusted gap for equal spacing vertically and horizontally */
-    padding: 10px;
-    height: 550px; 
-    overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: calc(100% - 10px); /* Adjust width considering padding */
+    overflow-y: auto;
+    max-height: 550px;
+    padding-top: 10px;
 }
 
 .ingredient-bubble {
-    background-color: #e6b240;
-    border-radius: 25px;
-    font-size: 1em; /* Set a default size */
-    padding: 5px 10px;  /* Adjust padding to reduce bubble size */
-    text-align: center;
-    box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.25);
-    transition: transform 0.3s;
-    height: 40px;  /* Reduce height to fit bubbles within the container */
-    line-height: 40px;  /* Adjust to center text vertically */
-    white-space: nowrap;  /* Prevent text from wrapping to the next line */
-    overflow: hidden;  /* Hide excess content */
-    text-overflow: ellipsis;  /* Add ellipsis if text overflows */
-    max-width: 100%;  /* Ensure bubble doesn't exceed its container */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    width: calc(100% - 10px); /* Adjust width considering padding */
+    padding: 10px 5px;
+    text-align: left;
+    box-shadow: none;
+    height: 40px;
+    line-height: 40px;
+    overflow-x: hidden; /* Hide overflow */
+    border-bottom: 1px solid #4e3f1d;
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
+.delete-button {
+    background-color: #FA7070;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+.delete-button:hover {
+    background-color: #FF3D3D;
+}
 
 
 
