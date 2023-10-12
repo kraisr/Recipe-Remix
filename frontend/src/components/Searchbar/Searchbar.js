@@ -61,7 +61,7 @@ function SearchBar() {
             if (!token) {
                 throw new Error('No token found');
               }
-            const response = await fetch('http://localhost:8080/user/pantry',
+            const response = await fetch('http://localhost:8080/user/add-pantry',
             {
                 method: "POST",
                 headers: {
