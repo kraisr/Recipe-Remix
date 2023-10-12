@@ -20,6 +20,7 @@ export const getUser = async (req, res) => {
 }
 
 export const addIngredient = async (req, res) => {
+    try {
   const ingredient = req.body.ingredientName;
 
         const updatedPantry = await User.findOneAndUpdate(
