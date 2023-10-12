@@ -1,4 +1,5 @@
 import express from "express";
+import {addIngredient, getFromPantry, user} from "../controllers/user.js";
 import { getUser, updateUser, updatePreferences, mode, reminder, reminderSetting } from "../controllers/user.js";
 import { requestResetPassword, resetPassword } from"../controllers/resetPassword.js";
 import { sendEmail, updateReminder } from "../controllers/sendEmail.js";
@@ -26,5 +27,10 @@ router.post("/update-preferences", updatePreferences);
 router.post("/mode", mode);
 router.post("/reminder", reminder);
 router.post("/reminderSetting", reminderSetting);
+
+
+router.post("/pantry", addIngredient);
+router.get("/pantry", getFromPantry);
+
 
 export default router;

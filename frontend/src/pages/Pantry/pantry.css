@@ -8,17 +8,28 @@
     height: calc(100% - 100px);
 
 }
+
+.pantry-title { /* Style for the "My Pantry" text */
+    margin-bottom: 10px;
+    margin-top: 0; /* Remove top margin */
+    font-size: 24px;       /* You can adjust this as per your preference */
+    font-weight: bold;     /* Making the text bold */
+    text-align: center;    /* Centering the text */
+}
 .pantry-left-container{
     display: flex;
+    flex-direction: column;
     background-color: #FBF2CF;
-    justify-self: start;
-    justify-content: center;
-    width: 25vw;
+    width: 50vw;
     height: 650px;
     border-radius: 0 25px 25px 0;
     box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.25);
-    position: static;
-    transform: none;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the top */
+    padding-top: 20px;
+    padding: 20px 10px; /* Reduced side padding */
+    overflow-x: hidden; /* Ensure no horizontal scrolling */
 }
 
 img {
@@ -29,21 +40,17 @@ img {
 .pantry-center-container{
     display: flex;
     flex-direction: column;
-    justify-self: center;
     justify-content: center;
-    justify-content: space-between;
-    text-align: center;
     align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .pantry-right-container{
     display: flex;
     background-color: #FBF2CF;
-    justify-self: end;
     justify-content: center;
-    width: 25vw;
+    width: 50vw;
     height: 650px;
     border-radius: 25px 0 0 25px;
     box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.25);
@@ -71,24 +78,25 @@ img {
 }
 
 .ingredients-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 10px;
-    padding: 20px;
+    width: 100%; /* Set to full width */
+    overflow-y: auto; /* Allow vertical scrolling for the entire list */
+    max-height: 550px;
+    padding-top: 10px;
+    padding-left: 0; /* Remove left padding */
+    padding-right: 0; /* Remove right padding */
 }
 
-.ingredient-bubble {
-    background-color: #FBF2CF;
-    border-radius: 25px;
-    padding: 10px 20px;
-    text-align: center;
-    box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.25);
-    transition: transform 0.3s;
-}
 
 .ingredient-bubble:hover {
     transform: scale(1.1);
     cursor: pointer;
+    z-index: 1;
+    background-color: #e8d8ab; /* Light gray background for highlight */
+    border: 1px solid #ffffff; /* Optional border for emphasis */
+    border-radius: 0 10px 10px 0;
 }
 
 .pantry-tag {
@@ -105,115 +113,45 @@ img {
     box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.recipe-tag {
-    display: none;
-    position: absolute;
-    top: 125px;  /* Adjust based on your preference and navbar height */
-    right: 10px; /* Adjust as needed */
-    padding: 10px 20px;  /* Adds some padding around the text */
-    background-color: #FBF2CF;  /* Example background color */
-    color: black;  /* Text color */
-    border-radius: 20px;  /* Rounded corners */
-    cursor: pointer;  /* Indicates it's clickable */
-    font-weight: bold;  /* Makes the text bold */
-    box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.25);
+
+.ingredient-bubble {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    width: calc(100% - 10px); /* Adjust width considering padding */
+    padding: 10px 5px;
+    text-align: left;
+    box-shadow: none;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    /* Remove any overflow properties */
 }
 
-@media (max-width: 768px) {
-    .pantry-container {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: calc(100% - 100px);
-    }
+.delete-button {
+    background-color: #FA7070;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-    .pantry-left-container,
-    .pantry-right-container {
-        width: 50vw;
-        margin: 10px 0;
-        border-radius: 25px;
-        box-shadow: none;
-    }
+.pantry-tag {
+    display: block;
+    justify-content: space-between;
+    position: absolute;
+    top: 150px;
+    left: 10px;
+    z-index: 1000; 
+    width: auto;
+    height: auto;
+}
 
-    .pantry-center-container img {
-        height: 150px; 
-        width: 150px;
-        padding-top: 200px;
-        padding-bottom: 20px;
-    }
-
-    .pantry-button {
-        width: 80%;  
-        padding: 10px 20px;
-        font-size: 30px;
-    }
-
-    .pantry-tag {
-        display: block;
-        justify-content: space-between;
-        position: absolute;
-        top: 150px;
-        left: 10px;
-        z-index: 1000; 
-        width: auto;
-        height: auto;
-    }
-
-    .recipe-tag {
-        display: block;
-        justify-content: space-between;
-        position: absolute;
-        top: 150px;
-        right: 10px;
-        z-index: 1000;
-        width: auto; 
-        height: auto; 
-        left: auto; 
-    }
-
-    .pantry-left-container {
-        position: fixed;
-        top: 150px;
-        left: 0;
-        width: 50vw;
-        height: calc(100% - 60px);
-        z-index: 999; 
-        overflow-y: auto; 
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-    }
-    .pantry-center-container{
-        display: flex;
-        flex-direction: column;
-        justify-self: center;
-        justify-content: center;
-        justify-content: space-between;
-        text-align: center;
-        align-items: center;
-        top: 200px;
-        width: 100%;
-        height: calc(100% - 100px);
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-    .pantry-right-container {
-        position: fixed;
-        top: 150px;
-        right: 0;
-        width: 50vw;
-        height: calc(100% - 60px);
-        z-index: 999; 
-        overflow-y: auto; 
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-    }
-
-    .pantry-left-container.open {
-        transform: translateX(0); 
-    }
-    .pantry-right-container.open {
-        transform: translateX(0);
-    }
+.delete-button:hover {
+    background-color: #FF3D3D;
 }
 
 @media (min-width: 769px) {
