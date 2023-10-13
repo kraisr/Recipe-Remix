@@ -2,12 +2,20 @@ import React, { useState, useEffect } from "react";
 import { generatePath, useNavigate } from 'react-router-dom';
 import ReactCodeInput from "react-verification-code-input";
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../state";
+import { useLocation } from "react-router-dom";
 import "./sendcode.css";
+
 
 const SendCode = () => {
   const [enteredCode, setEnteredCode] = useState(null);
   const [verificationCode, setVerificationCode] = useState(null);
   let [createdCode, setCreatedCode] = useState("");
+
+  const location = useLocation();
+  const loggedIn = location.state.loggedIn;
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const handleXButtonClick = () => {
@@ -42,10 +50,18 @@ const SendCode = () => {
     console.log("created code:", createdCode);
     console.log('entered code:', enteredCode);
     if (enteredCode === createdCode){
-      navigate('/profile');
+      window.alert('test');
+  
+      dispatch(
+        setLogin({
+          token: loggedIn.token,
+          user: loggedIn.user,
+        })
+      );
+      navigate('/');
     }
     else {
-      console.log('Verification failed');
+      window.alert('Verification failed');
     }
   }
 
@@ -93,13 +109,16 @@ const SendCode = () => {
               type="text"
               className="codeInput"
               onChange={handleVerificationCodeChange}
+              fieldWidth={40}
+              // fieldHeight={100}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ 
-                mt: 0.5,
+                mt: 2,
+                mb:2,
                 height: 50,
                 width:100,
                 backgroundColor: "#fa7070",
@@ -114,9 +133,9 @@ const SendCode = () => {
             </Button>
              
             
-            <div>
+            <div className="noCode">
                 Didn't receive the code?<br />
-                <a href="#">Send code again</a><br />
+                <a onClick={sendVerificationCode}> Resend Code</a><br />
                 {/* <a href="#">Change phone number</a> */}
             </div>
             

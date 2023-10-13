@@ -53,7 +53,7 @@ export const sendCode = async (req, res) => {
             subject: "6 Digit Code",
             text: `You are receiving this because you (or someone else) has enabled Two Factor Authentication for this account.
             Please enter the following 6 Digit Code to gain access to your Recipe Remix account:
-            ${code}
+                                        ${code}
             If you did not request this, please ignore this email and your password will remain unchanged.`
         };
 
