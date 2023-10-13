@@ -353,7 +353,7 @@ const LoginForm = ({ onNavigateToRegister }) => {
               }}
               onClick={handleRegisterClick}
             >
-              Don"t have an account? Register
+              Don't have an account? Register
             </Button>
             
             {/* Google Sign in Button */}
