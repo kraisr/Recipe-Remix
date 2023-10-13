@@ -28,12 +28,12 @@ const loginSchema = yup.object().shape({
         email: yup.string().email("Invalid email address").required("Please enter a valid email"),
         reminderTime: yup.string().required("Reminder time is required"),
     });
+    const [FAState, setFAState] = useState(false);
 
     const initialValues = {
         preferenceEmail: "",
         reminderTime: "",
     };
-    const [FAState, setFAState] = useState(false);
 
     useEffect(() => {
         const fetchUserSettings = async () => {
@@ -81,6 +81,7 @@ const loginSchema = yup.object().shape({
 
 
                 setReminderTime(data.reminderSetting.everydayAt.time);
+
                 //set 2FA state
                 setFAState(data.set2FA);
 
@@ -421,6 +422,11 @@ const loginSchema = yup.object().shape({
                             <FormControlLabel
                                 control={<Switch checked={reminder} onChange={toggleReminder} />}
                                 label="Set Reminder"
+                            />
+
+                            <FormControlLabel
+                                control={<Switch checked={FAState} onChange={toggle2FA} />}
+                                label="Enable Two Factor Authentication"
                             />
 
                             {reminder && (
