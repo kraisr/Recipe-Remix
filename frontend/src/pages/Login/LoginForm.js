@@ -59,7 +59,6 @@ const LoginForm = ({ onNavigateToRegister }) => {
       const loggedIn = await loggedInResponse.json();
       
       
-      const loggedIn = await loggedInResponse.json();
       
       if (!loggedInResponse.ok) {
         // throw new Error("Network response was not ok: ${loggedInResponse.statusText}");
@@ -200,23 +199,14 @@ const LoginForm = ({ onNavigateToRegister }) => {
                 bgcolor: "#fbf2cf",
                 "& label.Mui-focused": {
                   color: "#6b9466",  // Color of the label when input is focused
-                "& label.Mui-focused": {
-                  color: "#6b9466",  // Color of the label when input is focused
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "#a1c298",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#a1c298",
                   },
                   "&:hover fieldset": {
                     borderColor: "#88b083",
-                  "&:hover fieldset": {
-                    borderColor: "#88b083",
                   },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#6b9466",
                   "&.Mui-focused fieldset": {
                     borderColor: "#6b9466",
                   },
@@ -243,23 +233,14 @@ const LoginForm = ({ onNavigateToRegister }) => {
                 bgcolor: "#fbf2cf",
                 "& label.Mui-focused": {
                   color: "#6b9466",  // Color of the label when input is focused
-                "& label.Mui-focused": {
-                  color: "#6b9466",  // Color of the label when input is focused
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "#a1c298",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#a1c298",
                   },
                   "&:hover fieldset": {
                     borderColor: "#88b083",
-                  "&:hover fieldset": {
-                    borderColor: "#88b083",
                   },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#6b9466",
                   "&.Mui-focused fieldset": {
                     borderColor: "#6b9466",
                   },              
@@ -334,7 +315,6 @@ const LoginForm = ({ onNavigateToRegister }) => {
               }}
               onClick={handleRegisterClick}
             >
-              Don"t have an account? Register
               Don"t have an account? Register
             </Button>
             

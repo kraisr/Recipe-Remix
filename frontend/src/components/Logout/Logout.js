@@ -96,7 +96,3 @@ const Logout = ({ closeModal }) => {
 }
 
 export default Logout;
-
-
-
-
