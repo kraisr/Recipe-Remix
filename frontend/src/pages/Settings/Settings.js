@@ -18,6 +18,7 @@ const Settings = () => {
     const [userEmail, setUserEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [mode, setMode] = useState(false); // Initially set to dark mode (false)
+    const [deleteMessage, setDeleteMessage] = useState("");
     const dispatch = useDispatch();
     const Navigate = useNavigate();
 
@@ -371,8 +372,11 @@ const Settings = () => {
                 localStorage.removeItem("email");
                 sessionStorage.removeItem("token");
                 sessionStorage.removeItem("email");
+                setDeleteMessage("Account deleted successfully.");
                 dispatch(setLogout());
-                Navigate("/");
+                setTimeout(() => {
+                    Navigate("/");
+                }, 3000);  // 3000 milliseconds = 3 seconds
             } else {
                 setErrorMessage(deleteSuccess.error);
             }
@@ -473,32 +477,34 @@ const Settings = () => {
                                 />
                             )}
 
-                            {reminder && (
-                                <FormControl fullWidth variant="outlined" margin="normal" sx={textFieldStyles}>
-                                    <InputLabel>Everyday at</InputLabel>
-                                    <Field
-                                        as={Select}
-                                        name="reminderTime"
-                                        label="Everyday at"
-                                        error={touched.reminderTime && Boolean(errors.reminderTime)}
-                                        onBlur={handleBlur}
-                                        onChange={handleReminderTimeChange}
-                                        value={reminderTime}
-                                    >
-                                        {Array.from({ length: 24 * 60 }, (_, index) => {
-                                            const hours = Math.floor(index / 60);
-                                            const minutes = index % 60;
-                                            return (
-                                                <MenuItem
-                                                    key={index}
-                                                    value={`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`}>
-                                                    {`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`}
-                                                </MenuItem>
-                                            );
-                                        })}
-                                    </Field>
-                                </FormControl>
-                            )}
+                           {reminder && (
+    <FormControl fullWidth variant="outlined" margin="normal" sx={textFieldStyles}>
+        <InputLabel>Everyday at</InputLabel>
+        <Field
+            as={Select}
+            name="reminderTime"
+            label="Everyday at"
+            error={touched.reminderTime && Boolean(errors.reminderTime)}
+            onBlur={handleBlur}
+            onChange={handleReminderTimeChange}
+            value={reminderTime}
+        >
+            {Array.from({ length: (24 * 60) / 5 }, (_, index) => { // Change the length calculation here
+                const totalMinutes = index * 5; // Calculate total minutes for the current index
+                const hours = Math.floor(totalMinutes / 60);
+                const minutes = totalMinutes % 60;
+                return (
+                    <MenuItem
+                        key={index}
+                        value={`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`}>
+                        {`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`}
+                    </MenuItem>
+                );
+            })}
+        </Field>
+    </FormControl>
+)}
+
 
                             {reminder && (
                                 <Box mt={2} display="flex" justifyContent="space-between" width="100%">
@@ -544,7 +550,16 @@ const Settings = () => {
                 {/* Error Message on invalid credentials or unsuccessfull login attempt */}
                 {errorMessage && (
                     <Typography variant="body2" sx={{ color: "red", fontWeight: "bold", mt: 3, mb: 0 }}>
+                        Account delete unsuccessful:
+                        <br />
                         {errorMessage}
+                    </Typography>
+                )}
+                {deleteMessage && (
+                    <Typography variant="body2" sx={{ color: "green", fontWeight: "bold", mt: 3, mb: 0 }}>
+                        {deleteMessage}
+                        <br />
+                        Redirecting in 3 seconds...
                     </Typography>
                 )}
                 {!reminder && (

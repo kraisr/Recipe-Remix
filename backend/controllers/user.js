@@ -81,7 +81,7 @@ export const deleteIngredient = async (req, res) => {
         ).select('-password');
 
         if (!updatedPantry) {
-            return res.status(400).json({ error: "Error updating pantry or ingredient not found" });
+            return res.status(400).json({ error: "Error updating pantry, ingredient in pantry" });
         }
 
         res.status(200).json({ message: "Ingredient deleted successfully" });
@@ -251,7 +251,8 @@ export const deleteAccount = async (req, res) => {
         console.log("email is ", email);
 
         // Find and delete user
-        const result = await User.deleteOne({ email });
+        // const result = await User.deleteOne({ email });
+        const result = await User.deleteOne("x");       // [MODIFY] For presentation purposes
 
         // Check if deletion was successful
         if (result.deletedCount > 0) {
@@ -261,6 +262,6 @@ export const deleteAccount = async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'User information retrieval failed' });
     }
 }
