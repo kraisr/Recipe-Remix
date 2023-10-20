@@ -57,8 +57,9 @@ img {
 
 .pantry-right-container{
     display: flex;
+    flex-direction: column;
     background-color: #FBF2CF;
-    justify-content: center;
+    justify-content: start;
     width: 30vw;
     height: 650px;
     padding-top: 1%;
@@ -296,6 +297,41 @@ img {
     color: #FF3D3D;
     /* Add other styles (background, color, etc.) as desired */
 }
+
+.recipe-top-panel{
+    display:flex;
+    justify-content: space-around;
+}
+
+.recipe-bubble {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    width: calc(100% - 10px); /* Adjust width considering padding */
+    padding: 10px 5px;
+    text-align: left;
+    box-shadow: none;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left:10px;
+}
+
+.recipes-toggle-button:hover {
+    top: -5px;
+    position: relative;
+    color: black;
+    font-weight: bold;
+}
+ .recipe-bubble:hover { 
+    cursor: pointer;
+    background-color: transparent;
+    top: -2px;
+    font-weight: bold;
+} 
 
 
 @media (min-width: 769px) {
