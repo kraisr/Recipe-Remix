@@ -51,12 +51,13 @@ export const searchRecipes = async (req, res) => {
     console.log("searchRecipes endpoint hit");
     try {
         
-        const ingredientList = req.body;
-        console.log(ingredientList);
+        const ingredientList = req.body.ingredientNames;
+        console.log("ingredient list:", ingredientList);
+        
         const query = `
-        {
+        query SearchRecipes($ingredientNames: [String]!) {
             searchRecipesByIngredients(
-              mustIngredients: ${ingredientList}
+              mustIngredients: $ingredientNames
             ) {
               edges {
                 node {
@@ -64,14 +65,17 @@ export const searchRecipes = async (req, res) => {
                   ingredients {
                     name
                   }
-                 ingredientLines
+                  ingredientLines
                 }
               }
             }
-          }
+        }
         `;
 // databaseId
-//id
+
+        const variables = {
+            ingredientNames: ingredientList
+        };
 
         const response = await fetch("https://production.suggestic.com/graphql", {
             method: "POST",
@@ -80,12 +84,14 @@ export const searchRecipes = async (req, res) => {
                 Authorization: `Token ${process.env.SUGGESTIC_TOKEN}`,
                 "sg-user": process.env.SUGGESTIC_USER_ID
             },
-            body: JSON.stringify({ query })
+            body: JSON.stringify({ query,  variables})
         });
 
         const data = await response.json();
-
+        const matchedRecipes = data.data.searchRecipesByIngredients.edges.map(edge => edge.node);
+        
         console.log("Data from Suggestic API:", data);
+        console.log("matched recipes: ", matchedRecipes);
 
         res.json(data);
 

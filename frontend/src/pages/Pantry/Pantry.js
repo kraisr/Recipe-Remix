@@ -28,6 +28,8 @@ const Pantry = () => {
         setIsRecipesOpen(false);
     };
 
+    var snd = new Audio("file.wav");
+
     useEffect(() => {
         const fetchPantryIngredients = async () => {
             try {
@@ -76,21 +78,30 @@ const Pantry = () => {
     //perform the recipe remix here
     const handleDaRemix = async () => {
         try {
-            
+            console.log('ingredients:', pantryIngredients);
+            if (pantryIngredients.length === 0) {
+                setRecipeSuggestions([]);
+                return;
+            }
+            const ingredientNames = pantryIngredients.map(ingredient => ingredient.ingredientName);
+    
             const response = await fetch("http://localhost:8080/api/search-recipes/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body:  JSON.stringify({ recipeSuggestions })
+                body:  JSON.stringify({ingredientNames })
             });
-
+    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
+    
             const data = await response.json();
-            setRecipeSuggestions(data);
+            setRecipeSuggestions(data.data.searchRecipesByIngredients.edges);
+            console.log("recipes:", recipeSuggestions);
+            
+    
         } catch (error) {
             console.error("Failed to fetch pantry ingredients:", error);
         }
@@ -145,8 +156,30 @@ const Pantry = () => {
 
             <div className={`pantry-right-container ${isRecipesOpen ? 'slide-in' : ''}`}>
                 {isRecipesOpen && <button onClick={closePanels} className="close-panel-button" style={{display: 'block'}}>X</button>}
-                <div className="recipe-title">Matched Recipes</div>
-                <button className="filter-button">Filter</button>
+                <div className="recipe-top-panel">
+                    <div className="recipe-title">Matched Recipes</div>
+                    <button className="filter-button">Filter</button>
+                </div>
+                
+                <div className="ingredients-grid">
+                    {recipeSuggestions && recipeSuggestions.length > 0 ? (
+                        recipeSuggestions.map((recipe, index) => (
+                            <div key={index} className="recipe-bubble">
+                                <div className="recipe-name">{recipe.node.name}</div>
+                                <button
+                                    className="delete-button"
+                                    onClick={() => handleDelete(recipe.node.name)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                            
+                        ))
+                    ) : (
+                        <p>No recipes found.</p>
+                    )}
+                    <hr/>
+                </div>
             </div>
         </div>
     );
