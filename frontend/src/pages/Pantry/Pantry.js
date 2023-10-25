@@ -179,8 +179,8 @@ const Pantry = () => {
     
         return (
             <div className="pantry-container">
-                {isSmallScreen && !isPantryOpen && !isRecipesOpen && <button className="pantry-toggle-button" onClick={openPantry} style={{display: 'block', zIndex: 500}}>Pantry</button>}
-                {isSmallScreen && !isRecipesOpen && !isPantryOpen && <button className="recipes-toggle-button" onClick={openRecipes} style={{display: 'block', zIndex: 500}}>Matched Recipes</button>}
+                {isSmallScreen && !isPantryOpen && !isRecipesOpen && <button className="pantry-toggle-button" onClick={openPantry} style={{display: 'block', zIndex: 500,}}>Pantry</button>}
+                {isSmallScreen && !isRecipesOpen && !isPantryOpen && <button className="pantry-toggle-button" onClick={openRecipes} style={{display: 'block', zIndex: 500, marginLeft: '55%'}}>Matched Recipes</button>}
 
                 <div className={`pantry-left-container ${isPantryOpen ? 'slide-in' : ''}`}>
                     {isPantryOpen && <button onClick={closePanels} className="close-panel-button" style={{display: 'block'}}>X</button>} 
@@ -227,18 +227,22 @@ const Pantry = () => {
                 </div>
                 
                 <div className="ingredients-grid">
-                {recipeSuggestions && recipeSuggestions.length > 0 ? (
-                    recipeSuggestions.map((recipe, index) => (
-                        <div key={index} className="recipe-bubble">
-                            <div className="recipe-name">{recipe.node.name}</div>
-                            <button onClick={() => handleSaveRecipes(recipe.node)}>Save Recipe</button>
-                        </div>
-                    ))
-                ) : (
-                    <p>No recipes found.</p>
-                )}
-
-                    <hr/>
+                    {recipeSuggestions && recipeSuggestions.length > 0 ? (
+                        recipeSuggestions.map((recipe, index) => (
+                            <div key={index} className="recipe-bubble">
+                                <div className="recipe-name">{recipe.node.name}</div>
+                                <button
+                                    className="delete-button"
+                                    onClick={() => handleDelete(recipe.node.name)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                            
+                        ))
+                    ) : (
+                        <p>No recipes found.</p>
+                    )}
                 </div>
             </div>
         </div>
