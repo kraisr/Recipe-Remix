@@ -1,40 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-const MapComponent = ({ startingPoint }) => {
+function MapComponent({ startingPoint, isOpenNow, distance }) {
     const mapRef = useRef(null);
     const directionsServiceRef = useRef(new window.google.maps.DirectionsService());
     const directionsRendererRef = useRef(new window.google.maps.DirectionsRenderer());
 
-    useEffect(() => {
-        const mapOptions = {
-            zoom: 15,
-            // center: { lat: 40.4237, lng: -86.9212 }  // Purdue University's coordinates
-            center: startingPoint
-        };
-
-        const map = new window.google.maps.Map(mapRef.current, mapOptions);
-        window.google.maps.event.trigger(map, 'resize');
-
-        directionsRendererRef.current.setMap(map);
-
-        // Search for grocery stores nearby Purdue University
-        const service = new window.google.maps.places.PlacesService(map);
-        service.nearbySearch({
-            location: { lat: 40.4237, lng: -86.9212 },
-            radius: 5000,  // 5 km
-            type: ['grocery_or_supermarket']
-        }, (results, status) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                for (let i = 0; i < results.length; i++) {
-                    createMarker(results[i], map);
-                }
-            }
-        });
-
-    }, [startingPoint]);
-
-    const createMarker = (place, map) => {
+    const createMarker = useCallback((place, map) => {
         const marker = new window.google.maps.Marker({
             map,
             position: place.geometry.location
@@ -61,23 +33,20 @@ const MapComponent = ({ startingPoint }) => {
                     <strong>${place.name}</strong><br>
                     ${place.vicinity}<br>
                     <button 
-                      onclick="getDirectionsTo('${place.geometry.location}')" 
-                      style="
-                         background-color: #e57373;
-                         color: white;
-                         padding: 6px 12px;
-                         border: none;
-                         border-radius: 4px;
-                         cursor: pointer;
-                         outline: none;
-                         font-size: 0.875rem;
-                         font-weight: 500;
-                         mt: 2;
-                         text-transform: uppercase;
-                         transition: background-color 0.3s;
-                      "
-                      onmouseover="this.style.backgroundColor='#e53935'"
-                      onmouseout="this.style.backgroundColor='#e57373'"
+                        onclick="window.getDirectionsTo(${place.geometry.location.lat()}, ${place.geometry.location.lng()})"
+                        style="
+                            background-color: #e57373;
+                            color: white;
+                            padding: 6px 12px;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            outline: none;
+                            font-size: 0.875rem;
+                            font-weight: 500;
+                            text-transform: uppercase;
+                            transition: background-color 0.3s;
+                        "
                     >
                       Get Directions
                     </button>
@@ -85,14 +54,47 @@ const MapComponent = ({ startingPoint }) => {
             `);
             infowindow.open(map, marker);
         });
-    };
+    }, [startingPoint]);
+
+    useEffect(() => {
+        const mapOptions = {
+            zoom: 15,
+            center: startingPoint
+        };
+
+        const map = new window.google.maps.Map(mapRef.current, mapOptions);
+        window.google.maps.event.trigger(map, 'resize');
+
+        directionsRendererRef.current.setMap(map);
+
+        const callbackFunction = (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                for (let i = 0; i < results.length; i++) {
+                    createMarker(results[i], map);
+                }
+            } else {
+                console.error('Places API call failed with status:', status);
+            }
+        };
+
+        if (startingPoint) {
+            const request = {
+                location: new window.google.maps.LatLng(startingPoint.lat, startingPoint.lng),
+                radius: distance,
+                type: ['grocery_or_supermarket'],
+                openNow: isOpenNow
+            };
+
+            const service = new window.google.maps.places.PlacesService(map);
+            service.nearbySearch(request, callbackFunction);
+        }
+    }, [startingPoint, isOpenNow, distance, createMarker]);
 
     window.getDirectionsTo = (lat, lng) => {
         const destination = new window.google.maps.LatLng(lat, lng);
         const request = {
-            // origin: { lat: 40.4237, lng: -86.9212 },  // Starting from Purdue University
             origin: startingPoint,
-            destination,  // The chosen store's location
+            destination,
             travelMode: 'DRIVING'
         };
 
@@ -114,7 +116,9 @@ MapComponent.propTypes = {
     startingPoint: PropTypes.shape({
         lat: PropTypes.number.isRequired,
         lng: PropTypes.number.isRequired,
-    }).isRequired
+    }).isRequired,
+    isOpenNow: PropTypes.bool,
+    distance: PropTypes.number
 };
 
 export default MapComponent;
