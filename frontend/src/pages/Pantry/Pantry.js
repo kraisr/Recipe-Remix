@@ -342,9 +342,7 @@ const Pantry = () => {
     //perform the recipe remix here
     const handleDaRemix = async () => {
         try {
-            setTimeout(() => {
-                setIsGifPlaying(true);
-            }, 1000);
+            
             
             const selectedIngredients = pantryIngredients.filter(
                 (ingredient) => selectedCheckboxes[ingredient.ingredientName]
@@ -354,6 +352,9 @@ const Pantry = () => {
                 window.alert("No ingredients selected. Please add ingredients to your selection.");
                 return;
             }
+            setTimeout(() => {
+                setIsGifPlaying(true);
+            }, 1000);
             
             console.log('ingredients:', pantryIngredients);
             if (pantryIngredients.length === 0) {
