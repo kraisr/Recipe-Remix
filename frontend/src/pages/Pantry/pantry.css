@@ -105,8 +105,12 @@ img {
     background-color: #3e8e41;
 }
 
+
+
 #filterDropdown{ /*actual filter*/
     background-color: white;
+    z-index: 1;
+    padding: 2vw;
 }
 
 /* Style the dropdown content (hidden by default) */
@@ -114,7 +118,6 @@ img {
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: .5;
   transition: max-height 61s;
   position: absolute;
   top: 28.5%;
@@ -122,18 +125,24 @@ img {
   width: 20%;
 }
 
-/* Style the dropdown links */
-.dropdown-content a {
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  
+  .checkbox-label label {
+    margin-left: 25px; /* Adjust the label spacing as needed */
+  }
+  
+  .checkbox-label label:hover {
+    color: green;
+  }
 
-}
-
-/* Change color on hover */
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
+  .filter-section label{
+    display: flex;
+  }
+  
 
 .recipe-title {
     margin-bottom: 10px;
