@@ -5,6 +5,7 @@ import { deleteIngredientFromPantry } from "./DeleteIngredient.js";
 
 import remixSound from "../../audio/success.mp3";
 import failSound from "../../audio/fail.mp3";
+import greatSound from "../../audio/great.mp3";
 import mixingBowl from "../../images/mixing_bowl.gif";
 import mixingBowlImg from "../../images/frame-1.png";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -93,7 +94,7 @@ const Pantry = () => {
     const [filteredRecipeSuggestions, setFilteredRecipeSuggestions] = useState([]);
     const [isPantryOpen, setIsPantryOpen] = useState(false);
     const [isRecipesOpen, setIsRecipesOpen] = useState(false);
-
+    const [remixStatus, setRemixStatus] = useState(false);
     const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
     const [noRecipesMessage, setNoRecipesMessage] = useState("Nothing to see here yet, try hitting remix!");
     const[listLength, setListLength] = useState("");
@@ -153,7 +154,7 @@ const Pantry = () => {
     }, []);
 
     //identify if the filtered recipe is being remixed or searched
-    let remixStatus = false;
+    
 
 
     const openPantry = () => {
@@ -382,17 +383,17 @@ const Pantry = () => {
             
             console.log("recipes:", recipeSuggestions);
             console.log("length: ", recipeSuggestions.length);
-            const success = new Audio(remixSound);
+            const success = new Audio(greatSound);
             const fail = new Audio(failSound);
             
             if (data.data.searchRecipesByIngredients.edges.length !== 0){
                 success.play();
                 setNoRecipesMessage("");
                 setFilteredRecipeSuggestions(data.data.searchRecipesByIngredients.edges);
-                remixStatus = true;
+                setRemixStatus(true);
             } else {
                 fail.play();
-                remixStatus = false;
+                setRemixStatus(false);
                 setNoRecipesMessage("Oops! No recipes found");
             }
 
@@ -400,9 +401,10 @@ const Pantry = () => {
                 setIsGifPlaying(false);
                 setRecipeSuggestions(data.data.searchRecipesByIngredients.edges);
                 if(remixStatus) {
-                    window.alert("Success!");
+                    console.log("status: ", remixStatus);
+                    // window.alert("Success!");
                 } else {
-                    window.alert("Dubious Food :(");
+                    // window.alert("Dubious Food :(");
                 }
             }, 5000);
             
@@ -523,19 +525,21 @@ const Pantry = () => {
                 </div>
 
             <div className="pantry-center-container">
+
+
                 {isGifPlaying ? (
                     <img
                         src={mixingBowl}
                         alt="Mixing Bowl"
                         className="mixing-bowl-gif"
-                        style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
+                        // style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
                     />
                 ) : (
                     <img
                         src={mixingBowlImg}
                         alt="Mixing Bowl"
                         className="mixing-bowl-static"
-                        style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
+                        // style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
                     />
                 )}
                 <button type="button" className="pantry-button" onClick={handleDaRemix}>
