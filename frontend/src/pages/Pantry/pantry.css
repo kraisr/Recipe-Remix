@@ -330,6 +330,17 @@ img {
     /* Add other styles (background, color, etc.) as desired */
 }
 
+.recipe-success{
+    background-color: red;
+    height: 200px;
+    width: 200px;
+}
+
+.mixing-bowl-static{
+    width:100%;
+    height:100%;
+}
+
 @media (max-width: 768px) {
     .pantry-container {
         flex-direction: row;
@@ -361,10 +372,15 @@ img {
         transform: translateX(0); /* Comes in from the left or right */
     }
 
+    .pantry-center-container img{
+        height: 100%;
+        width: 50%;
+    }
+
     .pantry-toggle-button {
         display: block;
         justify-content: space-between;
-        position: absolute;
+        position: absolute; 
         top: 150px;
         left: 10px;
         z-index: 1000; 
@@ -377,10 +393,25 @@ img {
         position: absolute;
         top: 150px;
         right: 10px;
-        z-index: 1000;
+        /* z-index: 1000; */
         width: auto; 
         height: auto; 
         left: auto; 
+    }
+
+    .pantry-center-container{
+
+        width:100%
+    }
+
+    .mixing-bowl-static{
+        position: relative;
+        height: 100%;
+        width: 50%;
+    }
+    .pantry-button{
+        height: 100px;
+        width: 90%;
     }
 }
 
