@@ -97,12 +97,14 @@ const Pantry = () => {
     const [remixStatus, setRemixStatus] = useState(false);
     const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
     const [noRecipesMessage, setNoRecipesMessage] = useState("Nothing to see here yet, try hitting remix!");
-    const[listLength, setListLength] = useState("");
+    const [listLength, setListLength] = useState("");
     const [isGifPlaying, setIsGifPlaying] = useState(false);
     const [sortedIngredients, setSortedIngredients] = useState(pantryIngredients);
     const [draggedIngredientName, setDraggedIngredientName] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const [expandedRecipeIndex, setExpandedRecipeIndex] = useState(null);
+    const [addedIngredient, setAddedIngredient] = useState(null);
+
 
     const toggleRecipeExpansion = (index) => {
         if (expandedRecipeIndex === index) {
@@ -470,7 +472,16 @@ const Pantry = () => {
             setDraggedIngredientName(draggedItem.ingredientName);
         }
     };
-    
+
+    function handleMissingIngredientClick(ingredientName) {
+        // Perform some action with the ingredientName
+        console.log("Clicked on:", ingredientName);
+        setAddedIngredient(ingredientName);
+
+        setTimeout(() => {
+            setAddedIngredient(null);
+        }, 2000);
+    }    
 
 
     // Determine if we're on a small screen
@@ -584,15 +595,51 @@ const Pantry = () => {
                                 <div className="recipe-name">
                                     {recipe.node ? recipe.node.name : recipe.name}
                                 </div>
-                                <div className="pantry-right-button-containter">
-                                    <button className="pantry-save-button" onClick={(e) => { e.stopPropagation(); handleSaveRecipes(recipe.node); }}>Save</button>
-                                    <button className="delete-button" onClick={(e) => { e.stopPropagation(); handleDelete(recipe.node.name); }}>Delete</button>
-                                </div>
+                                {expandedRecipeIndex !== index && (
+                                    <div className="pantry-right-button-containter">
+                                        <button className="pantry-save-button" onClick={() => handleSaveRecipes(recipe.node)}>Save</button>
+                                        <button className="delete-button" onClick={() => handleDelete(recipe.node.name)}>Delete</button>
+                                    </div>
+                                )}
                             </div>
                             {expandedRecipeIndex === index && (
-                                    <div className="expanded-content" style={{ transition: 'max-height 0.3s ease-in-out', overflow: 'hidden', maxHeight: expandedRecipeIndex === index ? '100px' : '0' }}>
-                                        Some text for now...Some text for now...Some text for now...Some text for now...Some text for now...
+                                <div className={`expanded-content ${expandedRecipeIndex === index ? 'expanding' : 'collapsing'}`}>
+                                    <img src={ recipe.node ? recipe.node.mainImage : recipe.image } alt="recipe" className="recipe-image" />
+                                    <p style={{ width: '100%', marginTop: '10px' }}><b>Total time:</b> { recipe.node.totalTime }</p>
+                                    <div style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
+                                        <b>Ingredients:</b>
+                                        <ul style={{marginTop: '3px', marginBottom: '20px'}}>
+                                            {recipe.node.ingredients.map((ingredient, index) => (
+                                                <li key={index} style={{ color: pantryIngredients.some(pantryItem => pantryItem.ingredientName.trim().toLowerCase() === ingredient.name.trim().toLowerCase()) ? 'inherit' : 'red' }}>
+                                                    {pantryIngredients.some(pantryItem => pantryItem.ingredientName.trim().toLowerCase() === ingredient.name.trim().toLowerCase()) ? (
+                                                        ingredient.name
+                                                    ) : (
+                                                        <a href="#" className="ingredient-link" onClick={(e) => { e.preventDefault(); handleMissingIngredientClick(ingredient.name); }}>
+                                                            {ingredient.name}
+                                                        </a>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        { addedIngredient && <p style={{color: 'green', fontSize: '0.8rem'}}>{addedIngredient} added to shopping list</p> }
+                                        <div className="bottom-section">
+                                            <div 
+                                                className="view-more-button" 
+                                                onClick={() => {
+                                                    handleSaveRecipes(recipe.node);
+                                                    console.log("success");
+                                                }}
+                                            >
+                                                View More
+                                            </div>
+
+                                            <div className="save-delete-buttons">
+                                                <button className="pantry-save-button" onClick={() => handleSaveRecipes(recipe.node)}>Save</button>
+                                                <button className="delete-button" onClick={() => handleDelete(recipe.node.name)}>Delete</button>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
                             )}
                             </div>
                         ))
