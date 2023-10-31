@@ -17,7 +17,7 @@ const Pantry = () => {
     const [filteredRecipeSuggestions, setFilteredRecipeSuggestions] = useState([]);
     const [isPantryOpen, setIsPantryOpen] = useState(false);
     const [isRecipesOpen, setIsRecipesOpen] = useState(false);
-
+    
     const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
     const [noRecipesMessage, setNoRecipesMessage] = useState("Nothing to see here yet, try hitting remix!");
     const[listLength, setListLength] = useState("");
@@ -394,7 +394,8 @@ const Pantry = () => {
                     <button id="toggleDropdown">Filter</button>
                     
                     <div id="filterDropdown" className="dropdown-content">
-                        <MyComponent />
+                        <MyComponent    
+                        />
                     </div>
                 </div>
                 <div className="recipe-search-panel">
@@ -413,26 +414,28 @@ const Pantry = () => {
 
                 <div className="ingredients-grid">
 
-                    {filteredRecipeSuggestions && filteredRecipeSuggestions.length > 0 && recipeSuggestions.length > 0? (
-                        filteredRecipeSuggestions.map((recipe, index) => (
-                            <div key={index} className="recipe-bubble">
-                                <div className="recipe-name">
+                {filteredRecipeSuggestions && filteredRecipeSuggestions.length > 0 && recipeSuggestions.length > 0 ? (
+    filteredRecipeSuggestions.map((recipe, index) => {
+        console.log("Recipe Name:", recipe.node ? recipe.node.name : recipe.name); // Output to the terminal
+        return (
+            <div key={index} className="recipe-bubble">
+                <div className="recipe-name">
+                    {recipe.node ? recipe.node.name : recipe.name}
+                </div>
+                <button onClick={() => handleSaveRecipes(recipe.node)}>Save Recipe</button>
+                <button
+                    className="delete-button"
+                    onClick={() => handleDelete(recipe.node.name)}
+                >
+                    Delete
+                </button>
+            </div>
+        );
+    })
+) : (
+    <p>{noRecipesMessage}.</p>
+)}
 
-                                    {recipe.node ? recipe.node.name : recipe.name}
-                                </div>
-                                <button onClick={() => handleSaveRecipes(recipe.node)}>Save Recipe</button>
-
-                                <button
-                                    className="delete-button"
-                                    onClick={() => handleDelete(recipe.node.name)}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        ))
-                    ) : (
-                        <p>{noRecipesMessage}.</p>
-                    )}
 
                 </div>
             </div>
