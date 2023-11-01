@@ -10,6 +10,7 @@ import greatSound from "../../audio/great.mp3";
 import mixingBowl from "../../images/mixing_bowl.gif";
 import mixingBowlImg from "../../images/frame-1.png";
 import DeleteIcon from '@mui/icons-material/Delete';
+import RecipeWindow from '../../components/RecipeWindow/RecipeWindow'
 
 import {
     DndContext,
@@ -106,6 +107,7 @@ const Pantry = () => {
     const [expandedRecipeIndex, setExpandedRecipeIndex] = useState(null);
     const [addedIngredient, setAddedIngredient] = useState(null);
     const [promptMessage, setPromptMessage] = useState("");
+    const [selectedRecipes, setSelectedRecipes] = useState(null);
 
 
     const toggleRecipeExpansion = (index) => {
@@ -552,172 +554,183 @@ const Pantry = () => {
     // Determine if we're on a small screen
     const isSmallScreen = windowWidth < 769; // You can adjust this value as needed
     
-        return (
-            <div className="pantry-container">
-                {isSmallScreen && !isPantryOpen && !isRecipesOpen && <button className="pantry-toggle-button" onClick={openPantry} style={{display: 'block', zIndex: 500,}}>Pantry</button>}
-                {isSmallScreen && !isRecipesOpen && !isPantryOpen && <button className="pantry-toggle-button" onClick={openRecipes} style={{display: 'block', zIndex: 500, marginLeft: '55%'}}>Matched Recipes</button>}
+    return (
+        <div className="pantry-container">
+            {isSmallScreen && !isPantryOpen && !isRecipesOpen && <button className="pantry-toggle-button" onClick={openPantry} style={{display: 'block', zIndex: 500,}}>Pantry</button>}
+            {isSmallScreen && !isRecipesOpen && !isPantryOpen && <button className="pantry-toggle-button" onClick={openRecipes} style={{display: 'block', zIndex: 500, marginLeft: '55%'}}>Matched Recipes</button>}
 
-                <div className={`pantry-left-container ${isPantryOpen ? 'slide-in' : ''}`}>
-                    {isPantryOpen && <button onClick={closePanels} className="close-panel-button" style={{display: 'block'}}>X</button>} 
-                    <div className="pantry-title">My Pantry</div>
-                    <input 
-                        type="text" 
-                        placeholder="Search ingredients..." 
-                        value={searchTerm} 
-                        onChange={(e) => setSearchTerm(e.target.value)} 
-                        className="search-input"
-                    />
-                    
-                    <div className="ingredients-grid">
-                        <DndContext 
-                            sensors={sensors} 
-                            collisionDetection={closestCenter} 
-                            onDragEnd={(event) => {
-                                setIsDragging(false);
-                                handleDragEnd(event); 
-                            }}
-                            onDragStart={(event) => {
-                                setIsDragging(true);
-                                handleOnDragStart(event);
-                            }}
-                            modifiers={[restrictToParentElement, restrictToVerticalAxis]}
-                        >
-                            <SortableContext items={pantryIngredients.map(i => i._id)} strategy={verticalListSortingStrategy}>
-                                {pantryIngredients.filter(ingredient => ingredient.ingredientName.toLowerCase().includes(searchTerm.toLowerCase())).map(ingredient => (
-                                    <SortableIngredient 
-                                    key={ingredient._id} 
-                                    ingredient={ingredient} 
-                                    selectedCheckboxes={selectedCheckboxes} 
-                                    handleCheckboxClick={handleCheckboxClick} 
-                                    handleDelete={handleDelete}
-                                    onStartDrag={startDrag}
-                                />
-                                ))}
-                            </SortableContext>
+            <div className={`pantry-left-container ${isPantryOpen ? 'slide-in' : ''}`}>
+                {isPantryOpen && <button onClick={closePanels} className="close-panel-button" style={{display: 'block'}}>X</button>} 
+                <div className="pantry-title">My Pantry</div>
+                <input 
+                    type="text" 
+                    placeholder="Search ingredients..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="search-input"
+                />
+                
+                <div className="ingredients-grid">
+                    <DndContext 
+                        sensors={sensors} 
+                        collisionDetection={closestCenter} 
+                        onDragEnd={(event) => {
+                            setIsDragging(false);
+                            handleDragEnd(event); 
+                        }}
+                        onDragStart={(event) => {
+                            setIsDragging(true);
+                            handleOnDragStart(event);
+                        }}
+                        modifiers={[restrictToParentElement, restrictToVerticalAxis]}
+                    >
+                        <SortableContext items={pantryIngredients.map(i => i._id)} strategy={verticalListSortingStrategy}>
+                            {pantryIngredients.filter(ingredient => ingredient.ingredientName.toLowerCase().includes(searchTerm.toLowerCase())).map(ingredient => (
+                                <SortableIngredient 
+                                key={ingredient._id} 
+                                ingredient={ingredient} 
+                                selectedCheckboxes={selectedCheckboxes} 
+                                handleCheckboxClick={handleCheckboxClick} 
+                                handleDelete={handleDelete}
+                                onStartDrag={startDrag}
+                            />
+                            ))}
+                        </SortableContext>
 
-                            {isDragging && <DropZone onDelete={(event) => {
-                                const ingredientName = event.dataTransfer.getData("text/plain");
-                                handleDelete(ingredientName);
-                            }} />}
-                        </DndContext>
-                    </div>
-
-                    {pantryIngredients.length > 1 && (
-                        <div className="select-all-btn">
-                            <button className="button-17" onClick={handleSelectAll}>Select All</button>
-                        </div>
-                    )}
+                        {isDragging && <DropZone onDelete={(event) => {
+                            const ingredientName = event.dataTransfer.getData("text/plain");
+                            handleDelete(ingredientName);
+                        }} />}
+                    </DndContext>
                 </div>
 
-            <div className="pantry-center-container">
-
-
-                {isGifPlaying && animate ? (
-                    <img
-                        src={mixingBowl}
-                        alt="Mixing Bowl"
-                        className="mixing-bowl-gif"
-                        // style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
-                    />
-                ) : (
-                    <img
-                        src={mixingBowlImg}
-                        alt="Mixing Bowl"
-                        className="mixing-bowl-static"
-                        // style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
-                    />
+                {pantryIngredients.length > 1 && (
+                    <div className="select-all-btn">
+                        <button className="button-17" onClick={handleSelectAll}>Select All</button>
+                    </div>
                 )}
-                <button type="button" className="pantry-button" onClick={handleDaRemix}>
-                    REMIX
-                </button>          
             </div>
 
-            <div className={`pantry-right-container ${isRecipesOpen ? 'slide-in' : ''}`}>
-                {isRecipesOpen && <button onClick={closePanels} className="close-panel-button" style={{display: 'block'}}>X</button>}
-                <div className="recipe-top-panel">
-                    <div className="recipe-title">Matched Recipes</div>
-                    <button id="toggleDropdown">Filter</button>
-                    <div id="filterDropdown" className="dropdown-content">
-                        <MyComponent/>
-                    </div>
-                </div>
-                <div className="recipe-search-panel">
-                    <input 
-                        type="text"
-                        placeholder="Search recipes..."
-                        value={recipeSearchTerm}
-                        onChange={handleRecipeSearchInputChange}
-                        className="recipe-input"
-                    />
-                </div>
-                <div className="recipes-grid">
-                    {filteredRecipeSuggestions && filteredRecipeSuggestions.length > 0 && recipeSuggestions.length > 0? (
-                        filteredRecipeSuggestions.map((recipe, index) => (
-                            <div>
-                            <div key={index} className="recipe-bubble" onClick={() => toggleRecipeExpansion(index)}>
-                                <div className="recipe-name">
-                                    {recipe.node ? recipe.node.name : recipe.name}
-                                </div>
-                                {expandedRecipeIndex !== index && (
-                                    <div className="pantry-right-button-containter">
-                                        <button className="pantry-save-button" onClick={(event) => handleSaveRecipes(recipe.node, event)}>Save</button>
-<button className="delete-button" onClick={(event) => handleDelete(recipe.node.name, event)}>Delete</button>
+        <div className="pantry-center-container">
 
-                                    </div>
-                                )}
+
+            {isGifPlaying && animate ? (
+                <img
+                    src={mixingBowl}
+                    alt="Mixing Bowl"
+                    className="mixing-bowl-gif"
+                    // style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
+                />
+            ) : (
+                <img
+                    src={mixingBowlImg}
+                    alt="Mixing Bowl"
+                    className="mixing-bowl-static"
+                    // style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
+                />
+            )}
+            <button type="button" className="pantry-button" onClick={handleDaRemix}>
+                REMIX
+            </button>          
+        </div>
+
+        <div className={`pantry-right-container ${isRecipesOpen ? 'slide-in' : ''}`}>
+            {isRecipesOpen && <button onClick={closePanels} className="close-panel-button" style={{display: 'block'}}>X</button>}
+            <div className="recipe-top-panel">
+                <div className="recipe-title">Matched Recipes</div>
+                <button id="toggleDropdown">Filter</button>
+                <div id="filterDropdown" className="dropdown-content">
+                    <MyComponent/>
+                </div>
+            </div>
+            <div className="recipe-search-panel">
+                <input 
+                    type="text"
+                    placeholder="Search recipes..."
+                    value={recipeSearchTerm}
+                    onChange={handleRecipeSearchInputChange}
+                    className="recipe-input"
+                />
+            </div>
+            <div className="recipes-grid">
+                {filteredRecipeSuggestions && filteredRecipeSuggestions.length > 0 && recipeSuggestions.length > 0? (
+                    filteredRecipeSuggestions.map((recipe, index) => (
+                        <div>
+                        <div key={index} className="recipe-bubble" onClick={() => toggleRecipeExpansion(index)}>
+                            <div className="recipe-name">
+                                {recipe.node ? recipe.node.name : recipe.name}
                             </div>
-                            {expandedRecipeIndex === index && (
-                                <div className={`expanded-content ${expandedRecipeIndex === index ? 'expanding' : 'collapsing'}`}>
-                                    <img src={ recipe.node ? recipe.node.mainImage : recipe.image } alt="recipe" className="recipe-image" />
-                                    <p style={{ width: '100%', marginTop: '10px' }}><b>Total time:</b> { recipe.node.totalTime }</p>
-                                    <div style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
-                                        <b>Ingredients:</b>
-                                        <ul style={{marginTop: '3px', marginBottom: '20px'}}>
-                                            {recipe.node.ingredients.map((ingredient, index) => (
-                                                <li key={index} style={{ color: pantryIngredients.some(pantryItem => pantryItem.ingredientName.trim().toLowerCase() === ingredient.name.trim().toLowerCase()) ? 'inherit' : 'red' }}>
-                                                    {pantryIngredients.some(pantryItem => pantryItem.ingredientName.trim().toLowerCase() === ingredient.name.trim().toLowerCase()) ? (
-                                                        ingredient.name
-                                                    ) : (
-                                                        <a href="#" className="ingredient-link" onClick={(e) => { e.preventDefault(); handleMissingIngredientClick(ingredient.name); }}>
-                                                            {ingredient.name}
-                                                        </a>
-                                                    )}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        { addedIngredient && <p style={{color: 'green', fontSize: '0.8rem'}}>{addedIngredient} added to shopping list</p> }
-                                        <div className="bottom-section">
-                                            <div 
-                                                className="view-more-button" 
-                                                onClick={() => {
-                                                    handleSaveRecipes(recipe.node);
-                                                    console.log("success");
-                                                }}
-                                            >
-                                                View More
-                                            </div>
+                            {expandedRecipeIndex !== index && (
+                                <div className="pantry-right-button-containter">
+                                    <button className="pantry-save-button" onClick={(event) => handleSaveRecipes(recipe.node, event)}>Save</button>
+                                    <button className="delete-button" onClick={(event) => handleDelete(recipe.node.name, event)}>Delete</button>
 
-                                            <div className="save-delete-buttons">
-                                                <button className="pantry-save-button" onClick={() => handleSaveRecipes(recipe.node)}>Save</button>
-                                                <button className="delete-button" onClick={() => handleDelete(recipe.node.name)}>Delete</button>
-                                            </div>
-                                        </div>
-                                        {promptMessage && (
-                                            <div className="prompt-message">
-                                                {promptMessage}
-                                            </div>
-                                        )}
-                                    </div>
                                 </div>
                             )}
+                        </div>
+                        {expandedRecipeIndex === index && (
+                            <div className={`expanded-content ${expandedRecipeIndex === index ? 'expanding' : 'collapsing'}`}>
+                                <img src={ recipe.node ? recipe.node.mainImage : recipe.image } alt="recipe" className="recipe-image" />
+                                <p style={{ width: '100%', marginTop: '10px' }}><b>Total time:</b> { recipe.node.totalTime }</p>
+                                <div style={{ width: '100%', marginTop: '10px', textAlign: 'left' }}>
+                                    <b>Ingredients:</b>
+                                    <ul style={{marginTop: '3px', marginBottom: '20px'}}>
+                                        {recipe.node.ingredients.map((ingredient, index) => (
+                                            <li key={index} style={{ color: pantryIngredients.some(pantryItem => pantryItem.ingredientName.trim().toLowerCase() === ingredient.name.trim().toLowerCase()) ? 'inherit' : 'red' }}>
+                                                {pantryIngredients.some(pantryItem => pantryItem.ingredientName.trim().toLowerCase() === ingredient.name.trim().toLowerCase()) ? (
+                                                    ingredient.name
+                                                ) : (
+                                                    <a href="#" className="ingredient-link" onClick={(e) => { e.preventDefault(); handleMissingIngredientClick(ingredient.name); }}>
+                                                        {ingredient.name}
+                                                    </a>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    { addedIngredient && <p style={{color: 'green', fontSize: '0.8rem'}}>{addedIngredient} added to shopping list</p> }
+                                    <div className="bottom-section">
+                                        <div 
+                                            className="view-more-button" 
+                                            onClick={() => {
+                                                console.log(recipe.node);
+                                                setSelectedRecipes(recipe.node);
+                                            }}
+                                        >
+                                            View More
+                                        </div>
+
+                                        {
+                                            selectedRecipes && 
+                                            <RecipeWindow 
+                                                recipe={selectedRecipes} 
+                                                onClose={() => setSelectedRecipes(null)} 
+                                                onSave={(updatedRecipe) => {
+                                                    // Logic to save updatedRecipe to backend and update savedRecipes state
+                                                }}
+                                            />
+                                        }
+
+                                        <div className="save-delete-buttons">
+                                            <button className="pantry-save-button" onClick={() => handleSaveRecipes(recipe.node)}>Save</button>
+                                            <button className="delete-button" onClick={() => handleDelete(recipe.node.name)}>Delete</button>
+                                        </div>
+                                    </div>
+                                    {promptMessage && (
+                                        <div className="prompt-message">
+                                            {promptMessage}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        ))
-                    ) : (
-                        <p>{noRecipesMessage}.</p>
-                    )}
-                </div>
+                        )}
+                        </div>
+                    ))
+                ) : (
+                    <p>{noRecipesMessage}.</p>
+                )}
             </div>
         </div>
+    </div>
     );
 }
 
