@@ -13,6 +13,7 @@ import mixingBowlImg from "../../images/frame-1.png";
 import DeleteIcon from '@mui/icons-material/Delete';
 import RecipeWindow from '../../components/RecipeWindow/RecipeWindow'
 
+
 import {
     DndContext,
     closestCenter,
@@ -87,7 +88,102 @@ const SortableIngredient = ({ ingredient, selectedCheckboxes, handleCheckboxClic
     );
 };
 
+export const mapDietaryTags = (dietFilter, categoryFilter, mealFilter) => {
+    const dietaryTags = [];
+  
+    if (dietFilter.vegetarian) {
+      dietaryTags.push('{dietaryTag: VEGETARIAN}');
+    }
+  
+    if (dietFilter.vegan) {
+      dietaryTags.push('{dietaryTag: VEGAN}');
+    }
+    if (dietFilter.keto) {
+        dietaryTags.push('{tag: "Keto-Friendly"}');
+      }
+  
+    if (categoryFilter.dairy) {
+      dietaryTags.push('{dietaryTag: DAIRY_FREE}');
+    }
+  
+    if (categoryFilter.gluten) {
+      dietaryTags.push('{dietaryTag: GLUTEN_FREE}');
+    }
+    if (categoryFilter.nuts) {
+        dietaryTags.push('{tag: "Tree-Nut-Free"}');
+      }
+  
+    if(mealFilter.breakfast) {
+        dietaryTags.push('{mealTime: BREAKFAST}')
+    }
 
+    if(mealFilter.lunch) {
+        dietaryTags.push('{mealTime: LUNCH}')
+    }
+    if(mealFilter.dinner) {
+        dietaryTags.push('{mealTime: DINNER}')
+    }
+    if(mealFilter.snack) {
+        dietaryTags.push('{mealTime: SNACK}')
+    }
+    return dietaryTags;
+  };
+ 
+/*
+export async function sendDietaryTags (ingredientNames, mapDietaryTags, filterCriteria){
+    try {
+    
+        if (!ingredientNames || ingredientNames.length === 0) {
+            throw new Error("You must remix before you filter!");
+        }
+
+        if (!filterCriteria || !filterCriteria.dietFilter || !filterCriteria.categoryFilter || !filterCriteria.mealFilter) {
+            console.log(filterCriteria, filterCriteria.dietFilter, filterCriteria.categoryFilter, filterCriteria.mealFilter);
+            throw new Error("Invalid filter criteria");
+        }
+
+        console.log('Sending dietary tags...');
+    
+        const dietaryTags = mapDietaryTags(filterCriteria.dietFilter, filterCriteria.categoryFilter, filterCriteria.mealFilter);
+        console.log("tags array: ", dietaryTags);
+
+        const dietaryTagsRequest = await fetch("http://localhost:8080/api/recipe-search/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ingredientNames, dietaryTags }),
+        });
+
+        if (!dietaryTagsRequest.ok) {
+            console.error(`Network response for dietaryTags was not ok. Status: ${dietaryTagsRequest.status}, Response: ${await dietaryTagsRequest.text()}`);
+        } else {
+            console.log("Dietary tags sent successfully.");
+        }
+
+        // Continue with the rest of your code here
+    } catch (error) {
+        console.error("Failed to send dietaryTags:", error);
+    }
+}; */
+
+// Pantry.js
+export const sendDietaryTags = async (ingredientNames, filterCriteria) => {
+    try {
+      // Use filterCriteria here to send dietary tags
+      console.log('list of ingredietentes', ingredientNames)
+      const ingredientsArray = ingredientNames;
+      console.log('Sending dietary tags:', filterCriteria);
+      const dietaryTags = mapDietaryTags(filterCriteria.dietFilter, filterCriteria.categoryFilter, filterCriteria.mealFilter);
+      console.log('Sending dietary tags was successful! Here they are:', dietaryTags);
+      console.log('list of ingredietentes after mapping', ingredientNames)
+      
+      // Your logic to send dietary tags based on filterCriteria
+    } catch (error) {
+      console.error('Error sending dietary tags:', error);
+    }
+  };
+  
 
 const Pantry = () => {
 
@@ -107,6 +203,10 @@ const Pantry = () => {
     const [draggedIngredientName, setDraggedIngredientName] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const [expandedRecipeIndex, setExpandedRecipeIndex] = useState(null);
+
+    let [ingredientNames, setIngredientNames] = useState([]);
+
+
     const [addedIngredient, setAddedIngredient] = useState(null);
     const [promptMessage, setPromptMessage] = useState("");
     const [selectedRecipes, setSelectedRecipes] = useState(null);
@@ -126,6 +226,7 @@ const Pantry = () => {
         color: 'black', // Black text
     });
     
+
 
     const toggleRecipeExpansion = (index) => {
         if (expandedRecipeIndex === index) {
@@ -168,7 +269,10 @@ const Pantry = () => {
         fetchUserSettings();
     }, []);
 
-
+    const setterForRecipes = (newFilteredRecipeSuggestions) => {
+        setFilteredRecipeSuggestions(newFilteredRecipeSuggestions);
+      };
+      
     const sensors = useSensors(
         useSensor(PointerSensor)
     );
@@ -519,8 +623,9 @@ const Pantry = () => {
                 setRecipeSuggestions([]);
                 return;
             }
-            const ingredientNames = selectedIngredients.map((ingredient) => ingredient.ingredientName);
-            
+            ingredientNames = selectedIngredients.map((ingredient) => ingredient.ingredientName);
+            setIngredientNames(ingredientNames);
+            console.log("507- ingredientNames being passed from handleDaRemix: ", ingredientNames);
             
             const response = await fetch("http://localhost:8080/api/search-recipes/", {
                 method: "POST",
@@ -538,7 +643,33 @@ const Pantry = () => {
             console.log("animate: ", animate);
             console.log("data: ", data);
             console.log('type remix: ', typeof(data));
-            
+            //console.log("dietary tag: ", dietaryTag);
+
+             const filterCriteria = {
+            mealFilter: {
+                breakfast: false,
+                lunch: false,
+                dinner: false,
+                snack: false,
+            },
+            categoryFilter: {
+                nuts: false,
+                dairy: false,
+                gluten: false,
+            },
+            dietFilter: {
+                carb: false,
+                keto: false,
+                fat: false,
+                sugar: false,
+                vegetarian: false,
+                vegan: false,
+                kosher: false,
+            },
+            servingSize: '0',
+            prepTime: '0',
+        };
+
             if (animate) {
                 const success = new Audio(greatSound);
                 const fail = new Audio(failSound);
@@ -580,7 +711,6 @@ const Pantry = () => {
                     setNoRecipesMessage("Oops! No recipes found");
                 }
             }
-            
         } catch (error) {
             console.error("Failed to fetch pantry ingredients:", error);
         }
@@ -662,6 +792,42 @@ const Pantry = () => {
         }
     };
 
+
+    const [filterCriteria, setFilterCriteria] = useState({
+        mealFilter: {
+          breakfast: false,
+          lunch: false,
+          dinner: false,
+          snack: false,
+        },
+        categoryFilter: {
+          nuts: false,
+          dairy: false,
+          gluten: false,
+        },
+        dietFilter: {
+          carb: false,
+          keto: false,
+          fat: false,
+          sugar: false,
+          vegetarian: false,
+          vegan: false,
+          kosher: false,
+        },
+        servingSize: '0',
+        prepTime: '0',
+      });
+  
+      // Define a function to handle filter changes in Pantry component
+      const handleFilterChange = (newFilterCriteria) => {
+          // Update the filter criteria state when the filter changes
+          setFilterCriteria(newFilterCriteria);
+          
+      };
+       
+      
+///here i need to post the dietartTags 
+
     function handleMissingIngredientClick(ingredientName) {
         // Perform some action with the ingredientName
         console.log("Clicked on:", ingredientName);
@@ -673,6 +839,7 @@ const Pantry = () => {
             setAddedIngredient(null);
         }, 2000);
     }    
+
 
     // Determine if we're on a small screen
     const isSmallScreen = windowWidth < 769; // You can adjust this value as needed
@@ -763,7 +930,9 @@ const Pantry = () => {
                 <div className="recipe-title">Matched Recipes</div>
                 <button id="toggleDropdown">Filter</button>
                 <div id="filterDropdown" className="dropdown-content">
-                    <MyComponent/>
+                     <MyComponent   setFilteredRecipeSuggestions={setterForRecipes} // Pass the function as a prop
+                                       ingredientNames={ingredientNames} filterCriteria={filterCriteria} onFilterChange={handleFilterChange} />
+
                 </div>
             </div>
             <div className="recipe-search-panel">
