@@ -141,6 +141,36 @@ const userSchema = new mongoose.Schema({
             instructions: [String],
         }],
     }],
+    filters: {
+        vegetarian: {
+            type: Boolean,
+            default: false,
+        },
+        vegan: {
+            type: Boolean,
+            default: false,
+        },
+        dairy: {
+            type: Boolean,
+            default: false,
+        },
+        gluten: {
+            type: Boolean,
+            default: false,
+        },
+        keto: {
+            type: Boolean,
+            default: false,
+        },
+        kosher: {
+            type: Boolean,
+            default: false,
+        },
+        sugar: {
+            type: Boolean,
+            default: false,
+        },
+    },
     preferences: {
         lactoseIntolerance: {
             type: Boolean,
@@ -272,8 +302,7 @@ const userSchema = new mongoose.Schema({
     animate: {
         type: Boolean, 
         default: true,
-    }
-
+    },
 });
 
 // Hash the password before saving the user model
