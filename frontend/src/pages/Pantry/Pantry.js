@@ -504,6 +504,7 @@ const Pantry = () => {
             }
             ingredientNames = selectedIngredients.map((ingredient) => ingredient.ingredientName);
             setIngredientNames(ingredientNames);
+            console.log("507- ingredientNames being passed from handleDaRemix: ", ingredientNames);
             
             const response = await fetch("http://localhost:8080/api/search-recipes/", {
                 method: "POST",
