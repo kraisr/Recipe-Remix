@@ -467,7 +467,7 @@ const MyComponent = ({ ingredientNames, filterCriteria, onFilterChange }) => {
     </div>
 
       <div className="filter-section">
-        <button onClick={updateFilterCriteriaAndApply}>Apply Filters</button>
+      <button onClick={() => updateFilterCriteriaAndApply(ingredientNames)}>Apply Filters</button>
         <button className="filter-section" onClick={clearAllFilters}>Clear Filters</button>
       </div>
     </div>
