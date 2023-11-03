@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "./pantry.css";
+import "./filter.css";
 
 const MyComponent = ({  setFilteredRecipeSuggestions, ingredientNames, filterCriteria, onFilterChange }) => {
   const [userPreferences, setUserPreferences] = useState({
@@ -93,12 +93,11 @@ const MyComponent = ({  setFilteredRecipeSuggestions, ingredientNames, filterCri
       }));
 
       setCategoryFilter((prevState) => ({
-          nuts: userPreferences.nutAllergies,
-          dairy: userPreferences.dairyFree,
-          gluten: userPreferences.glutenIntolerance,
-      }));
-
-       console.log('User Preferences:', userPreferences);
+          nuts: data.preferences.nutAllergies,
+          dairy: data.preferences.dairyFree,
+          gluten: data.preferences.glutenIntolerance,
+        }));
+       //console.log('User Preferences:', userPreferences);
 
     } catch (error) {
       console.error('Error fetching user preferences:', error);
