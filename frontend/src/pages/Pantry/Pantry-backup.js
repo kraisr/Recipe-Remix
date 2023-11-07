@@ -717,9 +717,6 @@ const Pantry = () => {
     } 
 
 
-    
-
-
     const handleSaveRecipes = async (recipe, event) => {
         console.log(recipe);
         setCurrentlyModified(recipe.name);
@@ -1008,7 +1005,7 @@ const Pantry = () => {
                                                     {ingredient.name}
                                                 </a>
                                                 )}
-                                                {selectedIngredient === ingredient.name && showPrompt && (
+                                                {selectedIngredient === (recipe.node ? recipe.node.name : recipe.name) && showPrompt && (
                                                 <div className="ingredient-prompt">
                                                         <p style={{ color: 'black', marginBottom: '3px', marginTop: '3px' }}>
                                                             Do you want to add <span style={{ textDecoration: 'underline' }}>{selectedIngredient}</span> to your:
@@ -1079,6 +1076,3 @@ const Pantry = () => {
 }
 
 export default Pantry;
-
-
- 
