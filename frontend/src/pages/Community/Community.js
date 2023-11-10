@@ -107,9 +107,11 @@ const Community = () => {
     return (
         <div className="community-container">
             <div className="left-panel">
-                <button className="create-post-btn button-44" onClick={() => setIsPostWindowOpen(true)}>
-                    <i className="fas fa-plus"></i>
-                </button>
+                <center>
+                    <button className="create-post-btn button-44" onClick={() => setIsPostWindowOpen(true)}>
+                      <i className="fas fa-plus"></i>
+                    </button>
+                </center>
 
                 <div className="posted-title">
                     <h5>My Posted Recipes</h5>
@@ -127,6 +129,9 @@ const Community = () => {
                     </ul>
                   ))}
                 </div>
+
+                <div className="divide-line"></div>
+                
                 <div className="posted-title">
                     <h5>Categories</h5>
                 </div>
@@ -166,18 +171,21 @@ const Community = () => {
                 <button className="community-button">Recentness</button>
               </div>
 
-              <div className="post-grid">
+              <div className="c-post-grid">
                   {posts.map((post) => (
                     <ul className="post-list" key={post._id}>
                       <li>
                         <div className="post-item" onClick={() => handlePostClick(post._id)}>
                             <h4>{post.name}</h4>
-                            <div className="author"> 
-                              <p>User: </p> 
+                            <div className="subtitle">
+                              <div className="author"> 
+                                <p>User: </p> 
+                              </div>
+                              <div className="time">
+                                <p>Posted at: </p>
+                              </div>
                             </div>
-                            <div className="time">
-                              <p>Posted at: </p>
-                            </div>
+                            
                         </div>
                       </li>
                     </ul>
