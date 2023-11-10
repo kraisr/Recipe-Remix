@@ -136,7 +136,7 @@ function CreatePost({ isOpen, onRequestClose, recipes, onSubmit }) {
   
       console.log("post: ", post);
   
-      const response = await fetch("http://localhost:8080/user/save-post", {
+      const response = await fetch("http://localhost:8080/posts/create-post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

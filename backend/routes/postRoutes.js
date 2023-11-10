@@ -1,10 +1,14 @@
 import express from 'express';
-import { createPost, getUserPosts, deletePost } from '../controllers/postController.js';
+import { savePost, addRatingToPost, fetchPostById, fetchPostsByUser } from '../controllers/postController.js';
 
 const router = express.Router();
 
-router.post('/post', createPost);
+router.post('/create-post', savePost);
 
+router.post('/addRating', addRatingToPost);
 
+router.get('/fetch-user-posts', fetchPostsByUser);
+
+router.get('/:postId', fetchPostById);
 
 export default router;

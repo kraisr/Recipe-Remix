@@ -37,7 +37,7 @@ const Community = () => {
                 throw Error('No token found');
             }
 
-            const response = await fetch("http://localhost:8080/user/user", {
+            const response = await fetch("http://localhost:8080/posts/fetch-user-posts", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,12 +50,12 @@ const Community = () => {
             }
 
             const data = await response.json();
-            console.log("data: ", data.posts);
-            if (Array.isArray(data.posts)) {
+            console.log("data: ", data);
+            if (Array.isArray(data)) {
                 // Update the recipes state with the user's posts
-                const recipeNames = data.posts.map(post => post.name);
+                const recipeNames = data.map(post => post.name);
                 setRecipes(recipeNames);
-                setPosts(data.posts);
+                setPosts(data);
             } else {
                 console.error('Invalid data format:', data);
             }

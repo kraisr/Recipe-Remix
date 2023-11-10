@@ -53,9 +53,9 @@ const Post = ({ postId }) => {
             {post.caption}
           </div>
         </div>
-        <StarRating />
+        <StarRating postId={postId} />
       </div>
-    ) : null  // Return null if post is not set yet
+    ) : null
   );
 };
 
