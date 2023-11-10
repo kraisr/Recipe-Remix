@@ -12,16 +12,32 @@ const postSchema = mongoose.Schema({
   name: String, 
   image: String,
   caption: String,
-  isCustom: Boolean,
-  customRecipe: {
-    image: String,
-    name: String,
-    ingredients: [String],
-  },
+  ingredients: [{
+    type: String,
+    required: false,
+  }],
+
   createdAt: {
     type: Date,
-    default: new Date()
+    default: Date.now,
+  },
+  ratings: [{
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    value: { type: Number, min: 0, max: 5 },
+  }],
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+});
+
+// Virtual field for average rating
+postSchema.virtual('averageRating').get(function() {
+  let average = 0;
+  if (this.ratings.length > 0) {
+    const sum = this.ratings.map(rating => rating.value).reduce((acc, value) => acc + value, 0);
+    average = sum / this.ratings.length;
   }
+  return average.toFixed(2);
 });
 
 const Post = mongoose.model('Post', postSchema);
