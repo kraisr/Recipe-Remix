@@ -114,12 +114,12 @@ const Profile = () => {
           throw Error('No token found');
         }
 
-        const response = await fetch("http://localhost:8080/user/user", {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
+        const response = await fetch("http://localhost:8080/posts/fetch-user-posts", {
           method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+          },
         });
 
         if (!response.ok) {
@@ -127,11 +127,11 @@ const Profile = () => {
         }
 
         const data = await response.json();
-        if (data && data.posts && Array.isArray(data.posts)) {
+        if (data && Array.isArray(data)) {
           // Check if data.posts is an array before setting the state
-          setPosts(data.posts);
+          setPosts(data);
         } else {
-          console.error('Invalid posts data received:', data.posts);
+          console.error('Invalid posts data received:', data);
         }
 
       } catch (error) {
