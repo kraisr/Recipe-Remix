@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema({
         min: 2,
         // Add more configuration for password requirements
     },
+    profilePrivate: {
+        type: Boolean,
+        default: false,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -269,30 +273,6 @@ const userSchema = new mongoose.Schema({
             }
         }],
     }],
-
-    posts: [{
-        id: {
-            type:String,
-            required: false,
-        },
-        name: {
-            type: String,
-            required: false
-        },
-        image: {
-            type: String,
-            required: false,
-        },
-        caption: {
-            type: String, 
-            required:false,
-        },
-        ingredients: [{
-            type: String,
-            required: false,
-        }]
-
-    }],
     
     set2FA: {
         type: Boolean,
@@ -305,15 +285,7 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-// Hash the password before saving the user model
-
-// userSchema.pre("save", async function () {
-//     this.password = await bcrypt.hash(this.password, 12);
-// });
-
 
 const User = mongoose.model("User", userSchema);
-
-// module.exports = User;
 
 export default User;
