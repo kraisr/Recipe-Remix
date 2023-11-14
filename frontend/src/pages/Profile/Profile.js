@@ -122,6 +122,7 @@ const Profile = () => {
         applyChanges(data);
         setUserEmail(data.email);
         setSavedPosts(data.savedPosts);
+        console.log("saved: ", data.savedPosts);
         if (userId) {
           setIsProfilePrivate(data.profilePrivate);
         }
@@ -159,6 +160,7 @@ const Profile = () => {
           // Check if data.posts is an array before setting the state
           setPosts(data.posts);
           setUserStats(data);
+          console.log("posts: ", data.posts);
         } else {
           console.error('Invalid posts data received:', data.posts);
         }
