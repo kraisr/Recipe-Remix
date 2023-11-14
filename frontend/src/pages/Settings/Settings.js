@@ -96,15 +96,6 @@ const Settings = () => {
 
                 setAnimationState(data.animate);
 
-                console.log("email is ", data.email);
-                console.log("data.reminderSetting.email is ", data.reminderSetting.email);
-                console.log("mode is ", data.mode);
-                console.log("reminder is ", data.reminder);
-                console.log("data.reminderSetting.everydayAt is ", data.reminderSetting.everydayAt);
-                console.log("data.reminderSetting.everyHour is ", data.reminderSetting.everyHour);
-                console.log("data.reminderSetting.everydayAt.time is ", data.reminderSetting.everydayAt.time);
-                console.log("data.reminderSetting.everyHour.time is ", data.reminderSetting.everyHour.time);
-
             } catch (error) {
                 console.error("Error fetching user settings:", error);
             }
@@ -382,14 +373,6 @@ const Settings = () => {
                 }),
             });
 
-            console.log("email is ", data.email);
-            console.log("mode is ", data.mode);
-            console.log("reminder is ", data.reminder);
-            console.log("data.reminderSetting.everydayAt is ", data.reminderSetting.everydayAt);
-            console.log("data.reminderSetting.everyHour is ", data.reminderSetting.everyHour);
-            console.log("data.reminderSetting.everydayAt.time is ", data.reminderSetting.everydayAt.time);
-            console.log("data.reminderSetting.everyHour.time is ", data.reminderSetting.everyHour.time);
-
             if (!response.ok) {
                 console.error(`Failed to update reminderSetting.`);
             }
@@ -399,6 +382,7 @@ const Settings = () => {
     const handleDeleteAccount = async () => {
         const isSure = window.confirm("Are you sure you want to delete your account? This action is irreversible.");
         if (isSure) {
+            // console.log("email: ", userEmail);
             const deleteResponse = await fetch(
                 "http://localhost:8080/user/delete-account",
                 {
@@ -409,7 +393,7 @@ const Settings = () => {
                   body: JSON.stringify({email: userEmail}),
                 }
             );
-            console.log(deleteResponse);
+            // console.log(deleteResponse);
             const deleteSuccess = await deleteResponse.json();
       
             if (deleteSuccess && deleteResponse.ok) {
