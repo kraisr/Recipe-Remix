@@ -7,7 +7,7 @@ export const savePost = async (req, res) => {
         const token = req.headers.authorization.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.id;
-        const { name, image, caption, ingredients } = req.body;
+        const { name, image, caption, ingredients, difficulty, tags } = req.body;
 
         // Create a new post object
         const newPost = new Post({
@@ -17,8 +17,10 @@ export const savePost = async (req, res) => {
             caption,
             ingredients: ingredients || [],
             ratings: [],
+            difficulty,
+            tags,
         });
-
+        
         // Save the new post to the database
         const savedPost = await newPost.save();
 

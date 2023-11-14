@@ -151,7 +151,7 @@ const Post = ({ postId }) => {
         <div className="image-container">
           <img src={post.image} alt={post.name} className="recipe-image" />
         </div>
-  
+
         <div className="ingredientLines-container">
           <div className="window-title">Ingredients:</div>
           <ul>

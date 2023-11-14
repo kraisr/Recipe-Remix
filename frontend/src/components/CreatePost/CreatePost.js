@@ -140,10 +140,11 @@ function CreatePost({ isOpen, onRequestClose, recipes, onSubmit }) {
         caption: caption,
         ingredients: recipeIngredient,
         difficulty: difficulty,
+        tags: selectedCategories,
       };
   
       console.log("post: ", post);
-  
+    
       const response = await fetch("http://localhost:8080/posts/create-post", {
         method: "POST",
         headers: {
