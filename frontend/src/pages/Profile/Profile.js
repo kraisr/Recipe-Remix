@@ -185,18 +185,25 @@ const Profile = () => {
             <h2 className="user-name">{name}</h2>
             <div className="user-statistics">
               <div className="stat-item">
-                <span className="stat-value">{userStats.totalPosts}</span>
+                <span className="stat-value">
+                  {isProfilePrivate ? "-" : userStats.totalPosts}
+                </span>
                 <span className="stat-label">Posts</span>
               </div>
               <div className="stat-item">
-                <span className="stat-value">{userStats.averageRatingAcrossAllPosts}</span>
+                <span className="stat-value">
+                  {isProfilePrivate ? "-" : userStats.averageRatingAcrossAllPosts}
+                </span>
                 <span className="stat-label">Rating</span>
               </div>
               <div className="stat-item">
-                <span className="stat-value">{userStats.totalRatingsCount}</span>
+                <span className="stat-value">
+                  {isProfilePrivate ? "-" : userStats.totalRatingsCount}
+                </span>
                 <span className="stat-label">Ratings</span>
               </div>
             </div>
+
             <p className="user-bio">{bio}</p>
             <a href={formatLink(link)} className="user-link" target="_blank" rel="noopener noreferrer">{link}</a>
             
