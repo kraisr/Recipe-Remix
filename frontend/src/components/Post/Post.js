@@ -176,7 +176,11 @@ const Post = ({ postId }) => {
         </div>
 
         <div className="difficulty-container">
-          <RecipeDifficulty difficultyLevel={post.difficulty} />
+          <span className="window-title">Difficulty:</span> <RecipeDifficulty difficultyLevel={post.difficulty} />
+        </div>
+
+        <div className="tags-container">
+          
         </div>
 
         <div className="ingredientLines-container">
