@@ -30,6 +30,7 @@ const Community = () => {
     const [searchResults, setSearchResults] = useState({ users: [], posts: [] });
     const navigate = useNavigate();
     const cuisines = ["Italian", "Mexican", "Japanese", "Mediterranean", "Indian", "Party Food"];
+    const [userPosts, setUserPosts] = useState([]);
 
     const handleSearch = async (searchTerm) => {
       setSearchTerm(searchTerm);
@@ -84,6 +85,38 @@ const Community = () => {
         }
     };
 
+    const fetchUserPosts = async () => {
+      try {
+          const token = localStorage.getItem('token');
+          if (!token) {
+              throw Error('No token found');
+          }
+
+          const response = await fetch("http://localhost:8080/posts/fetch-user-posts", {
+              method: "GET",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+              },
+          });
+
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+
+          const data = await response.json();
+          // console.log("data: ", data);
+          if (Array.isArray(data.posts)) {
+              // Update the recipes state with the user's posts
+              setUserPosts(data.posts);
+          } else {
+              console.error('Invalid data format:', data.posts);
+          }
+      } catch (error) {
+          console.error('Error fetching user posts:', error);
+      }
+  };
+
     const handlePostClick = (postId) => {
       // Find the recipe object
       setCurrentPostId(postId);
@@ -98,6 +131,7 @@ const Community = () => {
     // Fetch user's posts when the component mounts
     useEffect(() => {
         fetchAllPosts();
+        fetchUserPosts();
     }, []);
 
     return (
@@ -115,7 +149,7 @@ const Community = () => {
                 {/* <hr /> */}
                 
                 <div className="recipe-grid">
-                  {posts.map((post) => (
+                  {userPosts.map((post) => (
                     <ul className="recipe-list" key={post._id}>
                       <li>
                         <div className="recipe-item button-33" onClick={() => handlePostClick(post._id)}>
