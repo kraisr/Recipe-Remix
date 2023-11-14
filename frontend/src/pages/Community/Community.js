@@ -29,7 +29,7 @@ const Community = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState({ users: [], posts: [] });
     const navigate = useNavigate();
-    const cuisines = ["Italian", "Mexican", "Japanese", "Mediterranean", "Indian", "Party Food"];
+    const cuisines = ["Italian", "Mexican", "Japanese", "Vegan", "Party Food"];
     const [selectedCuisines, setSelectedCuisines] = useState([]);
     const [userPosts, setUserPosts] = useState([]);
 
@@ -148,9 +148,8 @@ const Community = () => {
 
   const shouldDisplayPost = (post) => {
     if (selectedCuisines.length === 0) {
-      return true; // Display all posts if no cuisines are selected
+      return true;
     }
-    // Check if the post contains any of the selected cuisines
     return post.tags.some(tag => selectedCuisines.includes(tag));
   };
 
