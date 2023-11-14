@@ -208,21 +208,28 @@ export const bookmarkPost = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.id;
         
-        // Find the post by ID
         const post = await Post.findById(postId);
-
-        // Check if the post exists
         if (!post) {
             return res.status(404).json({ message: 'Post not found.' });
         }
 
-        await User.findByIdAndUpdate(userId, { $addToSet: { savedPosts: post } });
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const updatedSavedPosts = [...user.savedPosts, post].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        user.savedPosts = updatedSavedPosts;
+        await user.save();
+
         res.status(200).send('Post saved successfully');
     } catch (error) {
         console.error('Error bookmarking post:', error);
         res.status(500).json({ message: 'Failed to bookmark post.' });
     }
 };
+
 
 export const removeBookmark = async (req, res) => {
     try {
