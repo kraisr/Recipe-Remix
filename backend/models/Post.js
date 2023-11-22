@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
 const commentSchema = mongoose.Schema({
-  
   username: { type: String },
   text: String,
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  profileImage: {type: String},
 });
 
 function commentCount(count) {

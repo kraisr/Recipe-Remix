@@ -1,0 +1,58 @@
+.comment-section{
+    /* background-color: #C6EBC5; */
+    border-radius: 20px;
+    padding:5%;
+}
+
+.comment-item{
+    background-color: #FBF2CF;
+    border-radius: 5%;
+    padding:5% 5% 0% 5%;
+    margin-top:10%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.deleteBtn {
+    width: 20%;
+    height:30px;
+    font-size: 70%;
+    padding:0;
+    position: relative;
+    left:75%;
+    margin-bottom:5%;
+}
+
+.user-info-comment{
+    display: flex;
+    justify-content: flex-start;
+    /* background-color: rgb(222, 206, 238); */
+    height:0%;
+}
+
+.user-info-comment p{
+    /* background-color: chartreuse; */
+    height: 10%;
+    right:50%;
+    position: relative;
+
+}
+.user-info-comment img{
+    position: relative;
+    right:30%;
+    /* background-color: chartreuse; */
+    height: 10%;
+    width:20%;
+}
+
+.comment-text-section{
+    display: flex;
+    justify-content: space-around;
+    width:20%;
+    font-size: 1.5rem;
+}
+
+.fa-thumbs-up{
+    cursor: pointer;
+}
