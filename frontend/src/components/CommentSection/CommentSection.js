@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 
+import "./commentsection.css";
+
 const CommentSection = ({ postId, currentUserId }) => {
   const [comments, setComments] = useState([]);
+  const [currentUserProfileImage, setCurrentUserProfileImage] = useState('');
 
   useEffect(() => {
     // Fetch comments for the given postId
@@ -12,18 +15,21 @@ const CommentSection = ({ postId, currentUserId }) => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log("data: ", data);
         setComments(data.comments);
+        setCurrentUserProfileImage(data.comments.profileImage);
         console.log("comments: ", data.comments);
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
     };
 
-    // Call the fetchComments function
+    
+
+    // Call the fetchComments and fetchCurrentUserProfile functions
     fetchComments();
-    
-    
-  }, [postId]);
+  }, [postId, currentUserId]);
+  
 
   const handleDeleteComment = async (commentId) => {
     try {
@@ -59,12 +65,20 @@ const CommentSection = ({ postId, currentUserId }) => {
       <h2>Comments</h2>
       {comments.map((comment) => (
         <div key={comment.id} className="comment-item">
-          <p>{comment.username}</p>
+          <div className="user-info-comment">
+            <img src={currentUserProfileImage} alt="Profile" className="profile-image" />
+            <p>{comment.username}</p>
+          </div>
+
+          <div className="comment-text-section">
+            <i class="fa-regular fa-thumbs-up" ></i>
+            <i class="fa-regular fa-thumbs-down"></i>
+          </div>
+
           <p>{comment.text}</p>
+          
           {currentUserId === comment.username && (
-            console.log("current user1: ", currentUserId),
-            console.log("current user1: ", comment.userId),
-            <button onClick={() => handleDeleteComment(comment._id)}>Delete</button>
+            <button onClick={() => handleDeleteComment(comment._id)} className="button-44 deleteBtn">Delete</button>
           )}
         </div>
       ))}

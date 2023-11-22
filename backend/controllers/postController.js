@@ -277,7 +277,7 @@ export const isBookmarked = async (req, res) => {
 // Add the following function to handle adding a comment to a post
 export const addCommentToPost = async (req, res) => {
     try {
-        const { postId, username, text, createdAt } = req.body;
+        const { postId, username, text, createdAt, profilePicture } = req.body;
         const token = req.headers.authorization.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.id;
@@ -288,12 +288,15 @@ export const addCommentToPost = async (req, res) => {
             return res.status(404).json({ message: 'Post not found.' });
         }
 
+        console.log(profilePicture);
+
         // Create a new comment object
         const newComment = {
             user: userId,
             username: username,
             text: text,
-            createdAt: createdAt
+            createdAt: createdAt,
+            profileImage: profilePicture,
         };
 
         // Add the new comment to the post's comments array

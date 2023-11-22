@@ -19,7 +19,9 @@ const Post = ({ postId }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [comment, setComment] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
+
 
   useEffect(() => {
     setIsBookmarked(false);
@@ -67,6 +69,9 @@ const Post = ({ postId }) => {
       const data = await response.json();
       console.log("data: ", data);
       setCurrentUser(data.username);
+      setProfilePicture(data.image);
+      console.log("data image1", data.image);
+      console.log("data image2", profilePicture);
     } catch (error) {
       console.error('Error fetching current user:', error);
     }
@@ -189,17 +194,14 @@ const Post = ({ postId }) => {
 
   const handleCommentSubmit = async () => {
     try {
-      // Get the current time
       const currentTime = new Date();
-  
-      // Create the comment object
-
-      console.log("comments: ", currentUser);
+      console.log("popp: ", profilePicture);
       const commentData = {
         postId: postId,
         username: currentUser,
         text: comment,
         createdAt: currentTime.toISOString(), // Convert to ISO string for consistency
+        profileImage: profilePicture,
       };
   
       // Make the POST request
@@ -226,6 +228,11 @@ const Post = ({ postId }) => {
       console.error('Error adding comment to post:', error);
     }
   };
+
+  const handleCancelButton = () => {
+      setComment("");
+      setShowCommentInput(false);
+  }
 
   const RecipeDifficulty = ({ difficultyLevel }) => {
     let color;
@@ -323,11 +330,12 @@ const Post = ({ postId }) => {
             
 
             <div style={{ position:'relative', left:'75%' }} className="submit-cancel">
-              <button onClick={handleCommentSubmit}>Cancel </button>
+              <button onClick={handleCancelButton}>Cancel </button>
               <button onClick={handleCommentSubmit}>Submit</button>
             </div>
           </div>
         )}
+        <hr />
         <CommentSection postId={postId}  currentUserId={currentUser} />
       </div>
     ) : null
