@@ -194,17 +194,14 @@ const Messages = () => {
     };
     const handleStartConversation = async (otherUserEmail) => {
         try {
-            // Check if there's an existing conversation with this user
             const existingConversation = conversations.find(convo => 
                 convo.participants.some(participant => participant.email === otherUserEmail)
             );
     
             if (existingConversation) {
-                // If the conversation exists, select it
                 setSelectedConversation(existingConversation);
                 fetchMessages(existingConversation._id);
             } else {
-                // If not, start a new conversation
                 const response = await fetch('http://localhost:8080/message/conversations/start', {
                     method: "POST",
                     headers: {
@@ -217,13 +214,15 @@ const Messages = () => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 const newConversation = await response.json();
     
-                // Update conversations list and select the new conversation
-                setConversations(prevConversations => [...prevConversations, newConversation]);
-                setSelectedConversation(newConversation);
+                // Fetch additional participant details if needed (pseudo-code)
+                // const participantDetails = await fetchParticipantDetails(otherUserEmail);
+    
+                // Update the conversations list with complete participant details
+                setConversations(prevConversations => [...prevConversations, {...newConversation, /* include participant details here */}]);
+                setSelectedConversation({...newConversation, /* include participant details here */});
                 fetchMessages(newConversation._id);
             }
     
-            // Clear search term and results
             setSearchTerm('');
             setSearchResults([]);
         } catch (error) {
@@ -232,6 +231,7 @@ const Messages = () => {
     };
     
     
+    // gif api key hF8C3cocUNE8niLuyAlMj8eLPWv8f9hU
     
       const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
