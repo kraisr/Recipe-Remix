@@ -13,6 +13,7 @@ import {
   addCommentToPost,
   fetchAllComments,
   deleteComment,
+  updateCommentRating,
 } from '../controllers/postController.js';
 
 const router = express.Router();
@@ -42,5 +43,7 @@ router.post('/add-comment', addCommentToPost);
 router.get('/fetch-all-comments', fetchAllComments);
 
 router.post('/delete-comment', deleteComment);
+
+router.post('/update-comment-rating', updateCommentRating)
 
 export default router;

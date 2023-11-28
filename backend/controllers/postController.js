@@ -278,7 +278,7 @@ export const isBookmarked = async (req, res) => {
 // Add the following function to handle adding a comment to a post
 export const addCommentToPost = async (req, res) => {
     try {
-        const { postId, username, text, createdAt, profilePicture } = req.body;
+        const { postId, username, text, createdAt, rating} = req.body;
         const token = req.headers.authorization.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.id;
@@ -289,7 +289,7 @@ export const addCommentToPost = async (req, res) => {
             return res.status(404).json({ message: 'Post not found.' });
         }
 
-        console.log(profilePicture);
+        // console.log(profilePicture);
 
         // Create a new comment object
         const newComment = {
@@ -297,6 +297,7 @@ export const addCommentToPost = async (req, res) => {
             username: username,
             text: text,
             createdAt: createdAt,
+            rating: rating,
             isLiked: false,
         };
 
@@ -362,5 +363,38 @@ export const deleteComment = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+export const updateCommentRating = async (req, res) => {
+    try {
+        const { commentId, ratingChange } = req.body;
+
+        // Find the post containing the comment
+        const post = await Post.findOne({ 'comments._id': commentId });
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        // Find and update the rating of the specified comment
+        const comment = post.comments.find(comment => comment._id.equals(commentId));
+
+        if (!comment) {
+            return res.status(404).json({ error: 'Comment not found' });
+        }
+
+        // Update the comment rating
+        comment.rating += ratingChange;
+
+        // Save the updated post
+        await post.save();
+
+        res.status(200).json({ message: 'Comment rating updated successfully', post });
+    } catch (error) {
+        console.error('Error updating comment rating:', error);
+        res.status(500).json({ error: 'Failed to update comment rating' });
+    }
+};
+
+
 
 
