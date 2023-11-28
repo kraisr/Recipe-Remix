@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, updateUser, updatePreferences, mode, reminder, reminderSetting, deleteAccount, handleLikeComment, clearLikedComments } from "../controllers/user.js";
+import { getUser, updateUser, updatePreferences, mode, reminder, reminderSetting, deleteAccount, handleLikeComment, clearLikedComments, removeLikedComment } from "../controllers/user.js";
 
 import {addIngredient, getFromPantry, deleteIngredient, deleteRecipe, editRecipe, retreiveDietaryTags} from "../controllers/user.js";
 
@@ -81,6 +81,7 @@ router.post("/remove-recipe-from-folder", removeRecipeFromFolder);
 router.get("/search-community", searchCommunity);
 
 router.post("/like-comment", handleLikeComment);
-router.post("/unlike-comment", clearLikedComments);
+router.post("/delete-all-comments", clearLikedComments);
+router.post("/unlike-comment", removeLikedComment)
 
 export default router;

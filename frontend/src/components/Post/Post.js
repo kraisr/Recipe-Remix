@@ -197,6 +197,7 @@ const Post = ({ postId }) => {
         username: currentUser,
         text: comment,
         createdAt: currentTime.toISOString(), // Convert to ISO string for consistency
+        rating: 0,
       };
   
       // Make the POST request
