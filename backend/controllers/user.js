@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import Comment from '../models/Post.js';
 import User from '../models/User.js';
 import Post from '../models/Post.js';
 
@@ -227,7 +228,6 @@ export const updateUser = async (req, res) => {
         if (!updatedUser) {
             return res.status(400).json({ error: "User does not exist" });
         }
-
         res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
 
     } catch (error) {
@@ -860,3 +860,58 @@ export const deleteFolder = async (req, res) => {
       res.status(500).json({ error: err.message });
   }
 };
+
+
+export const handleLikeComment = async (req, res) => {
+  try {
+      const { commentId } = req.body;
+      const token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = decoded.id;
+      
+      let userData = await User.findById(userId);
+      console.log("user ", userData);
+      if (!userData) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      if (!userData.likedComments) {
+          userData.likedComments = [];
+      }
+
+      const updatedComment = await Comment.findById(commentId);
+
+      if (!userData.likedComments.includes(commentId)) {
+
+          userData.likedComments.push(commentId);
+
+          await userData.save();
+
+          return res.status(200).json({ message: 'Comment liked successfully', comment: updatedComment });
+      } else {
+          // Respond with a message indicating that the comment is already liked
+          return res.status(200).json({ message: 'Comment is already liked by the user' });
+      }
+  } catch (error) {
+      console.error("Error in handleLikeComment function:", error);
+      return res.status(500).json({ error: error.message });
+  }
+};
+
+export const clearLikedComments = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    // Use updateOne to set likedComments to an empty array
+    await User.updateOne({ _id: userId }, { $set: { likedComments: [] } });
+    
+    res.status(200).json({ message: 'All liked comments cleared successfully' });
+  } catch (error) {
+    console.error("Error in clearLikedComments function:", error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+

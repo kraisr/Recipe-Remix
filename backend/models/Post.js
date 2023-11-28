@@ -1,10 +1,14 @@
 import mongoose from 'mongoose';
 
 const commentSchema = mongoose.Schema({
+  // id: {
+  //   type: String,
+  //   required: true,
+  // },
   username: { type: String },
   text: String,
   createdAt: { type: Date, default: Date.now },
-  profileImage: {type: String},
+  isLiked: {type: Boolean, default: false},
 });
 
 function commentCount(count) {
@@ -103,6 +107,11 @@ postSchema.index({ name: 'text', caption: 'text' });
 
 export { postSchema };
 
+export {commentSchema};
+
 const Post = mongoose.model('Post', postSchema);
 
+const Comment = mongoose.model('Comment', commentSchema);
+export {Comment};
 export default Post;
+

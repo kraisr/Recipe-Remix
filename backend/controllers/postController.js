@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
@@ -296,7 +297,7 @@ export const addCommentToPost = async (req, res) => {
             username: username,
             text: text,
             createdAt: createdAt,
-            profileImage: profilePicture,
+            isLiked: false,
         };
 
         // Add the new comment to the post's comments array
