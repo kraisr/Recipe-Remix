@@ -12,6 +12,7 @@ import {
 } from "react-share";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { v4 as uuidv4 } from 'uuid';
 
 const Post = ({ postId }) => {
   const [post, setPost] = useState(null);
@@ -20,7 +21,6 @@ const Post = ({ postId }) => {
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [comment, setComment] = useState("");
   const [currentUser, setCurrentUser] = useState('');
-  const [profilePicture, setProfilePicture] = useState(null);
 
 
   useEffect(() => {
@@ -69,9 +69,6 @@ const Post = ({ postId }) => {
       const data = await response.json();
       console.log("data: ", data);
       setCurrentUser(data.username);
-      setProfilePicture(data.image);
-      console.log("data image1", data.image);
-      console.log("data image2", profilePicture);
     } catch (error) {
       console.error('Error fetching current user:', error);
     }
@@ -195,13 +192,11 @@ const Post = ({ postId }) => {
   const handleCommentSubmit = async () => {
     try {
       const currentTime = new Date();
-      console.log("popp: ", profilePicture);
       const commentData = {
         postId: postId,
         username: currentUser,
         text: comment,
         createdAt: currentTime.toISOString(), // Convert to ISO string for consistency
-        profileImage: profilePicture,
       };
   
       // Make the POST request
