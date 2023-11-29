@@ -290,6 +290,7 @@ const userSchema = new mongoose.Schema({
     savedPosts: [postSchema],
 
     likedComments: [commentSchema],
+    dislikedComments: [commentSchema],
 });
 
 

@@ -9,6 +9,7 @@ const commentSchema = mongoose.Schema({
   text: String,
   createdAt: { type: Date, default: Date.now },
   isLiked: {type: Boolean, default: false},
+  isUnliked: {type: Boolean, default: false},
   rating: {type: Number, default: 0},
   replies: [{
     username: { type: String },
