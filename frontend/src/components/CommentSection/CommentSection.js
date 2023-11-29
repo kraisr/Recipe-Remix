@@ -141,73 +141,183 @@ const CommentSection = ({ postId, currentUserId }) => {
 
   const handleLikeComment = async (commentId, userId) => {
     try {
-      // Check if the comment is already liked by the user
+      // Check if the comment is already liked or unliked by the user
       const isLiked = comments.find(comment => comment._id === commentId)?.isLiked || false;
-  
-      if (isLiked) {
+      const isUnliked = comments.find(comment => comment._id === commentId)?.isUnliked || false;
+      let flag = false;
+      if (isLiked && !isUnliked) {
         // If already liked, make a request to remove it from liked comments
-        const response = await fetch(`http://localhost:8080/user/unlike-comment`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          body: JSON.stringify({ commentId })
-        });
-  
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-  
-        // Update the local state to toggle isLiked and update the rating
-        setComments((prevComments) =>
-          prevComments.map(comment =>
-            comment._id === commentId
-              ? { ...comment, isLiked: !comment.isLiked, rating: comment.rating - 1 }
-              : comment
-          )
-        );
-  
-        // Update the comment rating on the server
-        await updateCommentRating(commentId, -1);
-        
-        fetchUser();
+        await unlikeComment(commentId, flag);
+      } else if (!isLiked && isUnliked) {
+        comments.find(comment => comment._id === commentId).rating++; 
+        // If already unliked, make a request to remove it from unliked comments
+        await likeComment(commentId);
+      } else if (isUnliked) {
+        // If already unliked, make a request to remove it from unliked comments
+        await removeUnlikeComment(commentId);
       } else {
-        // If not liked, make a request to like the comment
-        const updateUserData = {
-          commentId: commentId,
-        };
-  
-        const response = await fetch(`http://localhost:8080/user/like-comment`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          body: JSON.stringify(updateUserData)
-        });
-  
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-  
-        // Update the local state to toggle isLiked and update the rating
-        setComments((prevComments) =>
-          prevComments.map(comment =>
-            comment._id === commentId
-              ? { ...comment, isLiked: !comment.isLiked, rating: comment.rating + 1 }
-              : comment
-          )
-        );
-  
-        // Update the comment rating on the server
-        await updateCommentRating(commentId, 1);
-  
-        fetchUser();
+        // If not liked or unliked, make a request to like the comment
+        await likeComment(commentId);
       }
+  
+      // Fetch updated comments and user data
+      // await fetchComments();
+      await fetchUser();
+  
     } catch (error) {
       console.error('Error liking/disliking comment:', error);
     }
+  };
+
+  const likeComment = async (commentId, flag) => {
+    // Make a request to like the comment
+    const updateUserData = {
+      commentId: commentId,
+    };
+  
+    const response = await fetch(`http://localhost:8080/user/like-comment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(updateUserData)
+    });
+  
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+  
+    // Update the local state to toggle isLiked and update the rating
+    setComments((prevComments) =>
+      prevComments.map(comment =>
+        comment._id === commentId
+          ? { ...comment, isLiked: true, isUnliked: flag, rating: comment.rating + 1 }
+          : comment
+      )
+    );
+  
+    // Update the comment rating on the server
+    await updateCommentRating(commentId, 1);
+  };
+  
+  const unlikeComment = async (commentId, flag) => {
+    // Make a request to remove it from liked comments
+    const response = await fetch(`http://localhost:8080/user/unlike-comment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ commentId })
+    });
+  
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+  
+    // Update the local state to toggle isLiked and update the rating
+    setComments((prevComments) =>
+      prevComments.map(comment =>
+        comment._id === commentId
+          ? { ...comment, isLiked: false, isUnliked: flag, rating: comment.rating - 1 }
+          : comment
+      )
+    );
+  
+    // Update the comment rating on the server
+    await updateCommentRating(commentId, -1);
+  };
+
+  const removeUnlikeComment = async (commentId, flag) => {
+    // Make a request to remove it from liked comments
+    const response = await fetch(`http://localhost:8080/user/remove-dislike`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ commentId })
+    });
+  
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+  
+    // Update the local state to toggle isLiked and update the rating
+    setComments((prevComments) =>
+      prevComments.map(comment =>
+        comment._id === commentId
+          ? { ...comment, isLiked: false, isUnliked: false, rating: comment.rating + 1 }
+          : comment
+      )
+    );
+  
+    // Update the comment rating on the server
+    await updateCommentRating(commentId, 1);
+  };
+
+  const handleDislikeComment = async (commentId, userId) => {
+    try {
+      // Check if the comment is already liked or unliked by the user
+      const isLiked = comments.find(comment => comment._id === commentId)?.isLiked || false;
+      const isUnliked = comments.find(comment => comment._id === commentId)?.isUnliked || false;
+      let flag = false;
+      if (isUnliked && !isLiked) {
+        // If already liked, make a request to remove it from liked comments
+        // flag = true;
+        console.log("testing");
+        await removeUnlikeComment(commentId, flag);
+      } else if (!isUnliked && isLiked) {
+        comments.find(comment => comment._id === commentId).rating--; 
+        await dislikeComment(commentId);
+      }else if (isUnliked) {
+        // If already unliked, make a request to remove it from unliked comments
+        await removeUnlikeComment(commentId);
+      } else {
+        // If not liked or unliked, make a request to like the comment
+        await dislikeComment(commentId);
+      }
+  
+      // Fetch updated comments and user data
+      // await fetchComments();
+      await fetchUser();
+  
+    } catch (error) {
+      console.error('Error liking/disliking comment:', error);
+    }
+  };
+
+  const dislikeComment = async (commentId) => {
+    // Make a request to like the comment
+    const updateUserData = {
+      commentId: commentId,
+    };
+  
+    const response = await fetch(`http://localhost:8080/user/dislike-comment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(updateUserData)
+    });
+  
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+  
+    // Update the local state to toggle isLiked and update the rating
+    setComments((prevComments) =>
+      prevComments.map(comment =>
+        comment._id === commentId
+          ? { ...comment, isLiked: false, isUnliked: true, rating: comment.rating - 1 }
+          : comment
+      )
+    );
+  
+    // Update the comment rating on the server
+    await updateCommentRating(commentId, 1);
   };
   
   // Function to update comment rating on the server
@@ -327,7 +437,10 @@ const CommentSection = ({ postId, currentUserId }) => {
             onClick={() => handleLikeComment(comment._id, currentUserId)}
           ></i>
           <p>{comment.rating}</p>
-          <i className="fa-regular fa-thumbs-down"></i>
+          <i
+            className={`fa-thumbs-down ${comment.isUnliked ? 'fa-solid' : 'fa-regular'}`}
+            onClick={() => handleDislikeComment(comment._id, currentUserId)}
+          ></i>
         </div>
         <p>{comment.text}</p>
 
