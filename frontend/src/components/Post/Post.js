@@ -337,9 +337,6 @@ const Post = ({ postId, isOwner, onDelete }) => {
 
     return (
       <div className="share-modal">
-        <TwitterShareButton title={twitter} url={url} via="RecipeRemix">
-          <TwitterIcon size={32} round />
-        </TwitterShareButton>
         <EmailShareButton subject={post.name} body={content}>
           <EmailIcon size={32} round />
         </EmailShareButton>
