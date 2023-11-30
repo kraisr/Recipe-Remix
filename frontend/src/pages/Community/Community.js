@@ -217,7 +217,7 @@ return (
 
         <div className="divide-line"></div>
 
-        <div className="posted-title">
+        <div className="category-title">
           <h5>Categories</h5>
         </div>
         <div className="categories-grid">
