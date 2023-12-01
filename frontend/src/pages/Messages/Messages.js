@@ -331,7 +331,7 @@ const Messages = () => {
     return (
         <div className="chat-container">
             <div className="conversation-list">
-                <div className="search-input-container">
+                <div className="search-input-container3">
                     Your Conversations
                 </div>
                  {conversations.map((conversation) => {
