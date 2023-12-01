@@ -91,6 +91,41 @@ const Messages = () => {
         }
     };
 
+    const sendEmoji = async (emoji) => {
+        if (!selectedConversation) return;
+    
+        // Create a temporary emoji message to update UI optimistically
+        const tempEmojiMessage = {
+            _id: Date.now().toString(), // Temporary unique ID
+            content: emoji,
+            sender: { _id: userId },
+            conversation: selectedConversation._id
+        };
+    
+        // Update UI immediately
+        setMessages(prevMessages => [...prevMessages, tempEmojiMessage]);
+    
+        try {
+            const response = await fetch('http://localhost:8080/message/messages', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    conversationId: selectedConversation._id,
+                    content: emoji
+                })
+            });
+    
+            if (!response.ok) throw new Error('Network response was not ok');
+            // No need to update the message list here as it's already updated optimistically
+        } catch (error) {
+            console.error("Error sending emoji:", error);
+            // Optionally handle error by removing the temporary message or showing an error message
+        }
+    };
+
     const fetchConversations = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -380,7 +415,9 @@ const Messages = () => {
                 onKeyDown={handleKeyDown}
 
               />
-            <button onClick={handleSendMessage}>Send</button>
+            <button onClick={() => sendEmoji('👍')} className="emoji-button">👍</button>
+            <button onClick={() => sendEmoji('👎')} className="emoji-button">👎</button>
+            <button onClick={handleSendMessage}className="send-button">Send</button>
             </div>
           </>    
                 ) : (
