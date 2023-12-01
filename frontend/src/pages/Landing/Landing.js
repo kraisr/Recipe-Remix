@@ -5,6 +5,8 @@ import Carousel from 'react-multi-carousel';
 import { Formik, Form, Field } from "formik";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import 'react-multi-carousel/lib/styles.css';
+import ContactForm from "../Help/ContactForm";
+import EmailSent from "../Help/EmailSent";
 
 
 import Popup from 'reactjs-popup';
@@ -76,6 +78,11 @@ const responsive = {
     const openContactHandler = () => {
       setOpenContact(true);
     };
+
+    const [isEmailSent, setIsEmailSent] = useState(false);
+          const handleReset = () => {
+              setIsEmailSent(false);
+          };
    
     useEffect(() => {
       function handleClickOutside(event) {
@@ -253,78 +260,43 @@ const responsive = {
           contentStyle={{ borderRadius: '10%', background: '#C6EBC5'}}
           
         >
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "65vh", paddingTop:"5%" }}>
-            <Typography variant="h3" mb={3} fontWeight="bold">
-                Contact Us
-            </Typography>
-            <Typography variant="h6" mb={3}>
-                <strong>Phone:</strong> +1 (234) 567-8901
-            </Typography>
-            <Typography variant="h6" mb={3}>
-                <strong>Email:</strong> reciperemix@gmail.com
-            </Typography>
-            <Formik
-              initialValues={{ subject: '', body: '' }}
-                // initialValues={initialValues}
-                // // validationSchema={contactSchema}
-                // onSubmit={handleSubmit}
-            >
-                {({ isSubmitting,
-                    values,
-                    errors,
-                    touched,
-                    handleBlur,
-                    handleChange,
-                    handleSubmit,
-                    setFieldValue,
-                    resetForm,
-                    submitCount,
-                }) => (
-                    <Form>
-                        
-                        <TextField
-                            label="Subject"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.subject}
-                            variant="outlined"
-                            margin="normal"
-                            name="subject"
-                            error={Boolean(touched.subject) && Boolean(errors.subject) && submitCount > 0}
-                            helperText={(touched.subject && errors.subject && submitCount > 0) ? errors.subject : ""}
-                            required
-                            fullWidth
-                            autoFocus
-                            // sx={textFieldStyles}
-                        />
-                        <TextField
-                            label="Body"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.body}
-                            variant="outlined"
-                            margin="normal"
-                            name="body"
-                            error={Boolean(touched.body) && Boolean(errors.body) && submitCount > 0}
-                            helperText={(touched.body && errors.subject && submitCount > 0) ? errors.body : ""}
-                            required
-                            fullWidth
-                            multiline
-                            rows={4}
-                            // sx={textFieldStyles}
-                        />
-                        <Button 
-                            type="submit" 
-                            variant="contained" 
-                            disabled={isSubmitting}
-                            sx={{ mt: 4, backgroundColor: "#fa7070", color: "#fff", "&:hover": { backgroundColor: "#e64a4a" }}}
-                        >
-                            Send
-                        </Button>
-                    </Form>
-                )}
-            </Formik>
-        </Box>
+          
+
+          
+              <Box 
+                  // sx={{
+                  //     mt: 2,  // Vertical margin
+                  //     display: "flex",
+                  //     flexDirection: "column",
+                  //     alignItems: "center",
+                  //     justifyContent: "center",
+                  //     minHeight: "80vh", // Ensure it takes at least the full height of the viewport
+                  // }}
+              >
+                  <Box
+                      sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          bgcolor: "#a1c298",
+                          borderRadius: "8px",
+                          p: 4,
+                          width: ["90%", "60%", "40%", "60%"],  // Responsive width
+                          mx: "auto",
+                          my: 4,  // Vertical margin
+                          textAlign: "center",  // Ensure all text inside is centered
+                          fontSize: ["3vw", "2vw", "1.5vw", "1vw"],  // Responsive font size
+                      }}
+                  >
+                      {isEmailSent ? (
+                          <EmailSent onReset={handleReset} />
+                      ) : (
+                          <ContactForm userEmail={localStorage.email} onEmailSent={() => setIsEmailSent(true)} />
+                      )}
+              </Box>
+          </Box>
+          
         </Popup>
       </div>
     );
