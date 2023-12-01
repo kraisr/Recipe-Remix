@@ -73,22 +73,55 @@
   margin-bottom: 1%;
 }
 
-.message-input-container input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    margin-right: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+/* ... [Existing styles] */
+
+.message-input-container {
+  margin-top: auto; /* Keeps the input at the bottom */
+  display: flex;
+  position: sticky;
+  padding: 5px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #ccc;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgb(135, 135, 135); /* Optional: adds a subtle shadow for depth */
+  align-items: center; /* Align items vertically */
 }
 
-.message-input-container button {
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+/* Styles for the send button */
+.send-button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 8px; /* Add some space between the input and the send button */
 }
+
+/* Styles for emoji buttons */
+.emoji-button {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 8px;
+  cursor: pointer;
+  margin-left: 4px; /* Space between emoji buttons and send button */
+  font-size: 16px; /* Adjust size as needed */
+}
+
+/* Adjust the text input field to take up remaining space */
+.message-input-container input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* ... [Other existing styles] */
+
 
 .message-list {
     padding: 10px;
@@ -221,9 +254,26 @@
 
 }
 
+.search-input-container {
+  position: sticky;
+  top: 0;
+  font-weight: 500;
+  font-size:large;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #ffffff;
+  width: 100%; /* Full width */
+  text-align: center; /* Center the text */
+  box-shadow: 0 2px 4px rgb(135, 135, 135); /* Optional: adds a subtle shadow for depth */
+  border-bottom: 1px solid #ccc; /* Optional: adds a line to separate from the content */
+
+}
+
 .start-message-prompt {
 
   text-align: center; /* Center the text */
   padding-top: 30%;
   font-style: italic;
 }
+
+
