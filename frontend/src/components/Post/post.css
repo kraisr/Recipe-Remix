@@ -44,7 +44,27 @@
 .name-container {
   display: flex;
   justify-content: center;
+  padding:0;
 
+}
+.name-container h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  padding:0;
+}
+
+.average-rating{
+  /* border: red solid 1px; */
+  
+  position: relative;
+  
+}
+
+.name-rating-div{
+  display: flex;
+  width: 100%;
+  /* border: red solid 1px; */
+  justify-content: center;
 }
 
 .image-container {
@@ -142,7 +162,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10; /* Ensure it's above other elements */
+   z-index: 1; 
 }
 
 .dropdown-menu {
@@ -172,5 +192,13 @@
 
 .dropdown-menu-item:hover {
   background-color: #f1f1f1;
+}
+
+.dots-button {
+  background: none;
+  border: none;
+  font-size: large;
+  font-weight: bold;
+  z-index: -1;
 }
 

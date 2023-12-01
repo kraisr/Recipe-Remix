@@ -87,7 +87,12 @@ const Community = () => {
 
       const data = await response.json();
       // Update the recipes state with the user's posts
-      setPosts(data);
+      if (Array.isArray(data)) {
+        // Update the recipes state with the user's posts
+        setPosts(data);
+      } else {
+        console.error('Invalid data format:', data);
+      }
     } catch (error) {
       console.error('Error fetching user posts:', error);
     }
@@ -102,7 +107,7 @@ const Community = () => {
         }
 
 
-    const response = await fetch("http://localhost:8080/posts/fetch-all-posts", {
+    const response = await fetch("http://localhost:8080/posts/fetch-user-posts", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -116,11 +121,11 @@ const Community = () => {
 
     const data = await response.json();
     // console.log("data: ", data);
-    if (Array.isArray(data)) {
+    if (Array.isArray(data.posts)) {
       // Update the recipes state with the user's posts
-      setPosts(data);
+      setUserPosts(data.posts);
     } else {
-      console.error('Invalid data format:', data);
+      console.error('Invalid data format:', data.posts);
     }
   } catch (error) {
     console.error('Error fetching user posts:', error);
@@ -263,7 +268,7 @@ return (
           </div>
         </center>
         <div className="center-button">
-        <button className="community-button" onClick={handleRatingsClick}>
+        <button className="community-button  comment-rating-button" onClick={handleRatingsClick}>
           Ratings
         </button>
 
@@ -273,12 +278,12 @@ return (
         </div>
 
         {showRatingOptions && (
-            <div className="div" style={{ display: "flex", justifyContent: "space-between", width: "40%", position: "relative", left: "10%", top: "2%" }}>
+            <div className="high-low-div" style={{ display: "flex", justifyContent: "space-between", width: "30%", position: "relative", left: "10%", top: "2%" }}>
               <button className="community-button" onClick={() => handleHighestClick('highest')}>
                 Highest
               </button>
 
-              <button className="community-button" onClick={() => handleLowestClick('lowest')}>
+              <button className="community-button lowest-button" onClick={() => handleLowestClick('lowest')}>
                 Lowest
               </button>
             </div>

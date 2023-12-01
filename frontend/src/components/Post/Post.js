@@ -337,9 +337,6 @@ const Post = ({ postId, isOwner, onDelete }) => {
 
     return (
       <div className="share-modal">
-        <TwitterShareButton title={twitter} url={url} via="RecipeRemix">
-          <TwitterIcon size={32} round />
-        </TwitterShareButton>
         <EmailShareButton subject={post.name} body={content}>
           <EmailIcon size={32} round />
         </EmailShareButton>
@@ -440,7 +437,7 @@ const Post = ({ postId, isOwner, onDelete }) => {
         {/* Dropdown menu for post owners */}
         {isOwner && (
           <div className="post-owner-menu">
-            <button onClick={toggleDropdown} className="three-dots-button">...</button>
+            <button onClick={toggleDropdown} className="dots-button">...</button>
             {showDropdown && renderDropdownMenu()}
           </div>
         )}
@@ -454,10 +451,15 @@ const Post = ({ postId, isOwner, onDelete }) => {
             postId={postToDelete?.id}
           />
         )}
+        <div className="name-rating-div">
+          <div className="name-container">
+            <h1>{post.name}</h1>
+            
+            
+          </div>
 
-        <div className="name-container">
-          <h1>{post.name}</h1>
         </div>
+        
 
         <div className="image-container">
           <img src={post.image} alt={post.name} className="recipe-image" />
@@ -466,6 +468,11 @@ const Post = ({ postId, isOwner, onDelete }) => {
         <div className="difficulty-container">
           <span className="window-title">Difficulty:</span>
           <RecipeDifficulty difficultyLevel={post.difficulty} />
+        </div>
+
+        <div className="average-rating">
+        <span className="window-title">Average Rating: </span>
+        {post.averageRating}
         </div>
 
         <div className="tags-container">
