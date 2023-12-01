@@ -55,8 +55,10 @@ const CommentSection = ({ postId, currentUserId }) => {
         }));
 
         console.log("updated: ", updatedComments);
+
+        const sortedComments = updatedComments.sort((a, b) => b.rating - a.rating);
   
-        setComments(updatedComments);
+        setComments(sortedComments);
         console.log("rating: ", comments);
       } catch (error) {
         console.error('Error fetching comments:', error);
