@@ -16,14 +16,34 @@ Track pantry ingredients, discover recipes with dietary filters, save favorites,
 ## Key features
 
 - **Pantry-first recipe discovery**: search recipes by ingredients you already have.
-- **Dietary preferences**: filter results with common dietary restrictions/preferences (e.g., gluten-free, vegan, etc.).
 - **Saved recipes & folders**: bookmark recipes and organize them into custom folders.
 - **Shopping list**: turn recipes into an actionable grocery list.
 - **Grocery store finder**: map view powered by Google Maps + Places.
 - **Community**: create posts, comment/reply, and interact with other users.
-- **Direct messaging**: one-to-one conversations inside the app.
 - **Auth flows**: JWT auth + email confirmation + password reset (email provider required).
+- **Dietary preferences**: filter results with common dietary restrictions/preferences (e.g., gluten-free, vegan, etc.).
+- **Direct messaging**: one-to-one conversations inside the app.
 - **Automated reminders**: optional scheduled email reminders (cron + email provider required).
+
+### Register
+
+[![Preview docs](docs/img/register.png)](https://github.com/kraisr/Recipe-Remix)
+
+### Login
+
+[![Preview docs](docs/img/login.png)](https://github.com/kraisr/Recipe-Remix)
+
+### Shopping List + Nearby Grocery Store Map
+
+[![Preview docs](docs/img/shopping_list.png)](https://github.com/kraisr/Recipe-Remix)
+
+### Community
+
+[![Preview docs](docs/img/community.png)](https://github.com/kraisr/Recipe-Remix)
+
+### Password Recovery
+
+[![Preview docs](docs/img/recovery.png)](https://github.com/kraisr/Recipe-Remix)
 
 ---
 
@@ -31,20 +51,28 @@ Track pantry ingredients, discover recipes with dietary filters, save favorites,
 
 ### 1) Install
 
-```
+Clone the repository and enter into the new directory
+
+```bash
 git clone https://github.com/kraisr/Recipe-Remix && cd Recipe-Remix
 ```
-```
+
+Enter the backend directory and install dependencies
+
+```bash
 cd backend && npm ci
 ```
-```
+
+Enter the frontend directory and install dependencies
+
+```bash
 cd ../frontend && npm ci
 ```
 
 ### 2) Set environment variables
 
 Create backend/.env:
-```
+```bash
 MONGO_URL=mongodb://127.0.0.1:27017/recipe_remix
 
 JWT_SECRET=replace-with-a-long-random-string
@@ -60,13 +88,13 @@ GOOGLE_REFRESH_TOKEN=your_google_oauth_refresh_token
 ### 3) Start the apps
 
 Terminal 1 (backend):
-```
+```bash
 cd backend && npm start
 ```
 
 
 Terminal 2 (frontend):
-```
+```bash
 cd frontend && npm start
 ```
 
