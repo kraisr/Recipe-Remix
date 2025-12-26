@@ -25,6 +25,22 @@ Track pantry ingredients, discover recipes with dietary filters, save favorites,
 - **Direct messaging**: one-to-one conversations inside the app.
 - **Automated reminders**: optional scheduled email reminders (cron + email provider required).
 
+### Demo
+
+https://github.com/user-attachments/assets/2c666330-8a38-4174-a156-e880c15b30b4
+
+### Shopping List + Nearby Grocery Store Map
+
+[![Preview docs](docs/img/shopping_list.png)](https://github.com/kraisr/Recipe-Remix)
+
+### Profile
+
+[![Preview docs](docs/img/profile.png)](https://github.com/kraisr/Recipe-Remix)
+
+### Community
+
+[![Preview docs](docs/img/community.png)](https://github.com/kraisr/Recipe-Remix)
+
 ### Register
 
 [![Preview docs](docs/img/register.png)](https://github.com/kraisr/Recipe-Remix)
@@ -32,14 +48,6 @@ Track pantry ingredients, discover recipes with dietary filters, save favorites,
 ### Login
 
 [![Preview docs](docs/img/login.png)](https://github.com/kraisr/Recipe-Remix)
-
-### Shopping List + Nearby Grocery Store Map
-
-[![Preview docs](docs/img/shopping_list.png)](https://github.com/kraisr/Recipe-Remix)
-
-### Community
-
-[![Preview docs](docs/img/community.png)](https://github.com/kraisr/Recipe-Remix)
 
 ### Password Recovery
 
