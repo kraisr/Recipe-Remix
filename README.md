@@ -81,16 +81,18 @@ cd ../frontend && npm ci
 
 Create backend/.env:
 ```bash
-MONGO_URL=mongodb://127.0.0.1:27017/recipe_remix
+MONGO_URL=your_mongo_url
 
 JWT_SECRET=replace-with-a-long-random-string
-
-SUGGESTIC_USER_ID=your_suggestic_user_id
-SUGGESTIC_TOKEN=your_suggestic_token
 
 GOOGLE_CLIENT_ID=your_google_oauth_client_id
 GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
 GOOGLE_REFRESH_TOKEN=your_google_oauth_refresh_token
+GOOGLE_ACCESS_TOKEN=your_google_oauth_access_token
+
+SUGGESTIC_TOKEN=your_suggestic_token
+SUGGESTIC_USER_ID=your_suggestic_user_id
+GIPHY_TOKEN=your_giphy_token
 ```
 
 ### 3) Start the apps
