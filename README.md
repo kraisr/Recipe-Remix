@@ -35,27 +35,27 @@ https://github.com/user-attachments/assets/2c666330-8a38-4174-a156-e880c15b30b4
 
 ### Shopping List + Nearby Grocery Store Map
 
-[![Preview docs](docs/img/shopping_list.png)](https://github.com/kraisr/Recipe-Remix)
+<img width="1871" height="969" alt="shopping_list" src="https://github.com/user-attachments/assets/0e93586d-31e2-41bb-adc3-c0d2ca5b583d" />
 
 ### Profile
 
-[![Preview docs](docs/img/profile.png)](https://github.com/kraisr/Recipe-Remix)
+<img width="1868" height="966" alt="profile" src="https://github.com/user-attachments/assets/32a7403e-0e5b-433c-a27f-4080171da820" />
 
 ### Community
 
-[![Preview docs](docs/img/community.png)](https://github.com/kraisr/Recipe-Remix)
+<img width="1861" height="967" alt="community" src="https://github.com/user-attachments/assets/d34a645c-690f-436e-aad3-e2e86edfa60b" />
 
 ### Register
 
-[![Preview docs](docs/img/register.png)](https://github.com/kraisr/Recipe-Remix)
+<img width="1902" height="968" alt="register" src="https://github.com/user-attachments/assets/64675644-8ddf-408c-b266-a59689461f57" />
 
 ### Login
 
-[![Preview docs](docs/img/login.png)](https://github.com/kraisr/Recipe-Remix)
+<img width="1901" height="968" alt="login" src="https://github.com/user-attachments/assets/276cf652-f13d-4dea-b6e3-6845290a1379" />
 
 ### Password Recovery
 
-[![Preview docs](docs/img/recovery.png)](https://github.com/kraisr/Recipe-Remix)
+<img width="1869" height="967" alt="recovery" src="https://github.com/user-attachments/assets/5ac97d54-bcb6-41a6-8942-52d67c2c958e" />
 
 ---
 
