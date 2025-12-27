@@ -1,4 +1,9 @@
+<p align="center">
+  <img width="130" alt="logo" src="https://github.com/user-attachments/assets/ab3375a8-9e7d-4a88-bc2d-4a11023e13ae" />
+</p>
+
 <h1 align="center">Recipe Remix 👨‍🍳🥗</h1>
+
 
 A full-stack recipe and meal-planning app that helps you **turn what you already have into meals reducing leftovers and potential food waste**.  
 Track pantry ingredients, discover recipes with dietary filters, save favorites, build shopping lists, share your recipes, and connect with a community.
