@@ -53,9 +53,11 @@ https://github.com/user-attachments/assets/2c666330-8a38-4174-a156-e880c15b30b4
 
 <img width="1901" height="968" alt="login" src="https://github.com/user-attachments/assets/276cf652-f13d-4dea-b6e3-6845290a1379" />
 
+<!--
 ### Password Recovery
 
 <img width="1869" height="967" alt="recovery" src="https://github.com/user-attachments/assets/5ac97d54-bcb6-41a6-8942-52d67c2c958e" />
+!-->
 
 ---
 
