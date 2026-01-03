@@ -5,10 +5,16 @@
 <h1 align="center">Recipe Remix 👨‍🍳🥗</h1>
 
 
-A full-stack recipe and meal-planning app that helps you **turn what you already have into meals reducing leftovers and potential food waste**.  
+A full-stack recipe recommendation app that helps you **turn what you already have into meals reducing leftovers and potential food waste**.  
 Track pantry ingredients, discover recipes with dietary filters, save favorites, build shopping lists, share your recipes, and connect with a community.
 
 🚀 **Quick start:** [Run with Docker](#option-a-recommended-run-with-docker) · [Manual setup](#option-b-manual-setup-install-dependencies-locally)
+
+📄 **Project documentation:** Agile/Scrum (backlog, charter, and design document) live in [`docs/`](docs/):
+
+- [`Backlog.pdf`](docs/Backlog.pdf)
+- [`Charter.pdf`](docs/Charter.pdf)
+- [`Design Document.pdf`](docs/Design%20Document.pdf)
 
 ---
 
